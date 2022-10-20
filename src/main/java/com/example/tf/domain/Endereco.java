@@ -18,37 +18,37 @@ public class Endereco {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name ="idEndereco", nullable = false)
+	@Column(name ="id_endereco", nullable = false)
 	private Long idEndereco;
 	
 	@NotBlank
 	@Size(max = 8)
-	@Column(name="cepEndereco", nullable = false, length = 8)
+	@Column(name="cep_endereco", nullable = false, length = 8)
 	private String cepEndereco; 
 	
 	@NotBlank
 	@Size(max = 80)
-	@Column(name="ruaEndereco", nullable = false, length = 80)
+	@Column(name="rua_endereco", nullable = false, length = 80)
 	private String ruaEndereco;
 	
 	@NotBlank
 	@Size(max = 50)
-	@Column(name="bairroEndereco", nullable = false, length = 50)
+	@Column(name="bairro_endereco", nullable = false, length = 50)
 	private String bairroEndereco;
 	
 	@NotBlank
 	@Size(max = 80)
-	@Column(name="cidadeEndereco", nullable = false, length = 80)
+	@Column(name="cidade_endereco", nullable = false, length = 80)
 	private String cidadeEndereco;
 	
 	@NotBlank
 	@Size(max = 20)
-	@Column(name="numeroEndereco", nullable = false, length = 20)
+	@Column(name="numero_endereco", nullable = false, length = 20)
 	private String numeroEndereco;
 	
 	@NotBlank
 	@Size(max = 200)
-	@Column(name="complementoEndereco", length = 200)
+	@Column(name="complemento_endereco", length = 200)
 	private String complementoEndereco;
 
 	public Long getIdEndereco() {

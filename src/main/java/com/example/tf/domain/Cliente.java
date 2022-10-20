@@ -24,35 +24,35 @@ public class Cliente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name ="idCliente", nullable = false)
+	@Column(name ="id_cliente", nullable = false)
 	private Long idCliente;
 	
 	
 
 	@NotBlank
 	@Size(max = 50)
-	@Column(name="nomeCompletoCliente", nullable = false, length = 50)
+	@Column(name="nome_completo_cliente", nullable = false, length = 50)
 	private String nomeCompletoCliente; 
 	
 	@Email
 	@NotBlank
 	@Size(max = 80)
-	@Column(name="emailCliente", nullable = false, length = 80,unique = true)
+	@Column(name="email_cliente", nullable = false, length = 80,unique = true)
 	private String emailCliente;
 	
 	@CPF
 	@NotBlank
 	@Size(max = 11)
-	@Column(name="cpfCliente", nullable = false, length = 11, unique = true)
+	@Column(name="cpf_cliente", nullable = false, length = 11, unique = true)
 	private String cpfCliente; 
 	
 	
 	@NotBlank
 	@Size(max = 40)
-	@Column(name="telefoneCliente", nullable = false, length = 40)
+	@Column(name="telefone_cliente", nullable = false, length = 40)
 	private String telefoneCliente;
 	
-	@Column(name= "datanascimentoCliente")
+	@Column(name= "data_nascimento_cliente")
 	private LocalDate dataNascimentoCliente;
 	
 	@NotNull

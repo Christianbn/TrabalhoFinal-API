@@ -1,60 +1,60 @@
 CREATE TABLE categoria(
-	idCategoria serial PRIMARY KEY,
-	nomeCategoria varchar(30) NOT NULL UNIQUE,
-	descricaoCategoria varchar(200)
+	id_categoria serial PRIMARY KEY,
+	nome_categoria varchar(30) NOT NULL UNIQUE,
+	descricao_categoria varchar(200)
 );
 	
 CREATE TABLE produto(
-	idProduto serial PRIMARY KEY,
-	nomeProduto varchar(30) NOT NULL UNIQUE,
-	descricaoProduto varchar(200),
-	quantidadeEstoqueProduto int,
-	dataCadastroProduto date,
-	valorUnitarioProduto REAL NOT NULL,
-	imagemProduto bytea,
-	id_categoria int REFERENCES categoria(idCategoria)
+	id_produto serial PRIMARY KEY,
+	nome_produto varchar(30) NOT NULL UNIQUE,
+	descricao_produto varchar(200),
+	quantidade_estoque_produto int,
+	data_cadastro_produto date,
+	valor_unitario_produto REAL NOT NULL,
+	imagem_produto bytea,
+	id_categoria int REFERENCES categoria(id_categoria)
 );
 
 CREATE TABLE endereco(
-	idEndereco serial PRIMARY KEY,
-	cepEndereco varchar(8) NOT NULL,
-	ruaEndereco varchar(80) NOT NULL,
-	bairroEndereco varchar(50) NOT NULL,
-	cidadeEndereco varchar(80) NOT NULL,
-	numeroEndereco varchar(20) NOT NULL,
-	complementoEndereco varchar(80),
-	ufEndereco varchar(2) NOT NULL
+	id_endereco serial PRIMARY KEY,
+	cep_endereco varchar(8) NOT NULL,
+	rua_endereco varchar(80) NOT NULL,
+	bairro_endereco varchar(50) NOT NULL,
+	cidade_endereco varchar(80) NOT NULL,
+	numero_endereco varchar(20) NOT NULL,
+	complemento_endereco varchar(80),
+	uf_endereco varchar(2) NOT NULL
 );
 
 CREATE TABLE cliente(
-	idCliente serial PRIMARY KEY,
-	nomeCompletoCliente varchar(50) NOT NULL,
-	emailCliente varchar(80) NOT NULL unique,
-	cpfCliente varchar(11) NOT NULL unique,
-	telefoneCliente varchar(40) NOT NULL,
-	dataNascimentoCliente date,
-	id_endereco int REFERENCES endereco(idEndereco) NOT NULL
+	id_cliente serial PRIMARY KEY,
+	nome_completo_cliente varchar(50) NOT NULL,
+	email_cliente varchar(80) NOT NULL unique,
+	cpf_cliente varchar(11) NOT NULL unique,
+	telefone_cliente varchar(40) NOT NULL,
+	data_nascimento_cliente date,
+	id_endereco int REFERENCES endereco(id_endereco) NOT NULL
 );
 	
 CREATE TABLE pedido(
-	idPedido serial PRIMARY KEY,
-	dataPedido date NOT NULL,
-	dataEntregaPedido date,
-	dataEnvioPedido date,
+	id_pedido serial PRIMARY KEY,
+	data_pedido date NOT NULL,
+	data_entrega_pedido date,
+	data_envio_pedido date,
 	status varchar(1) NOT NULL,
-	valorTotalPedido REAL NOT NULL,
-	id_cliente int REFERENCES cliente(idCliente)
+	valor_total_pedido REAL NOT NULL,
+	id_cliente int REFERENCES cliente(id_cliente)
 );	
 	
 	CREATE TABLE itemPedido(
-	idItemPedido serial PRIMARY KEY,
-	quantidadeItemPedido int NOT NULL,
-	precoVendaItemPedido REAL NOT NULL, 
-	percentualDescontoItemPedido REAL NOT NULL,
-	valorBrutoItemPedido REAL NOT NULL,	
-	valorLiquidoItemPedido REAL NOT NULL,	
-	id_produto int REFERENCES produto(idProduto) NOT NULL,
-	id_pedido int REFERENCES pedido(idPedido)NOT NULL
+	id_item_pedido serial PRIMARY KEY,
+	quantidade_item_pedido int NOT NULL,
+	preco_venda_item_pedido REAL NOT NULL, 
+	percentual_desconto_item_pedido REAL NOT NULL,
+	valor_bruto_item_pedido REAL NOT NULL,	
+	valor_liquido_item_pedido REAL NOT NULL,	
+	id_produto int REFERENCES produto(id_produto) NOT NULL,
+	id_pedido int REFERENCES pedido(id_pedido)NOT NULL
 );
 	
 	

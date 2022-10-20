@@ -21,28 +21,28 @@ public class Produto {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name ="idProduto", nullable = false)
+	@Column(name ="id_produto", nullable = false)
 	private Long idProduto;
 	
 	@NotBlank
 	@Size(max = 30)
-	@Column(name="nomeProduto", nullable = false, unique = true, length = 30)
+	@Column(name="nome_produto", nullable = false, unique = true, length = 30)
 	private String nomeProduto; 
 	
 	@NotBlank
 	@Size(max = 200)
-	@Column(name="descricaoProduto", length = 200)
+	@Column(name="descricao_produto", length = 200)
 	private String descricaoProduto ;
 	
 	@NotNull
-	@Column(name= "quantidadeEstoqueProduto")
+	@Column(name= "quantidade_estoque_produto")
 	private Integer quantidadeEstoqueProduto;
 	
-	@Column(name= "dataCadastroProduto")
+	@Column(name= "data_cadastro_produto")
 	private LocalDate dataCadastroProduto;
 	
 	@NotNull
-	@Column(name = "valorUnitarioProduto", nullable = false) 
+	@Column(name = "valor_unitario_produto", nullable = false) 
 	private Double valorUnitarioProduto;
 	
 	//imagemProduto bytea,

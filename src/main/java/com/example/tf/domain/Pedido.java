@@ -21,17 +21,17 @@ public class Pedido {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name ="idPedido", nullable = false)
+	@Column(name ="id_pedido", nullable = false)
 	private Long idPedido;
 	
 	@NotNull
-	@Column(name= "dataPedido", nullable = false)
+	@Column(name= "data_pedido", nullable = false)
 	private LocalDate dataPedido;
 
-	@Column(name= "dataEntregaPedido")
+	@Column(name= "data_entrega_pedido")
 	private LocalDate dataEntregaPedido;
 	
-	@Column(name= "dataEnvioPedido")
+	@Column(name= "data_envio_pedido")
 	private LocalDate dataEnvioPedido;
 	
 	@NotBlank
@@ -40,7 +40,7 @@ public class Pedido {
 	private String status; 
 
 	
-	@Column(name="valorTotalPedido", nullable = false, length = 2)
+	@Column(name="valor_total_pedido", nullable = false, length = 2)
 	private Double valorTotalPedido;
 	
 	@NotNull

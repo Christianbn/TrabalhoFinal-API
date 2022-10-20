@@ -17,17 +17,17 @@ public class Categoria {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name ="idCategoria", nullable = false)
+	@Column(name ="id_categoria", nullable = false)
 	private Long idCategoria;
 	
 	@NotBlank
 	@Size(max = 30)
-	@Column(name="nomeCategoria", nullable = false, unique = true, length = 30)
+	@Column(name="nome_categoria", nullable = false, unique = true, length = 30)
 	private String nomeCategoria;
 
 	@NotBlank
 	@Size(max = 200)
-	@Column(name="descricaoCategoria", length = 200)
+	@Column(name="descricao_categoria", length = 200)
 	private String descricaoCategoria;
 
 	public Long getIdCategoria() {
