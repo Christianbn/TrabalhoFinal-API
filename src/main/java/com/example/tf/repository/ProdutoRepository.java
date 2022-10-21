@@ -10,6 +10,7 @@ import com.example.tf.domain.Produto;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long>{
 
-	Optional<Produto> findByDescricaoProduto(String descricao);
+	Optional<Produto> findByNomeProduto(String nomeProduto);
+
 	
 }

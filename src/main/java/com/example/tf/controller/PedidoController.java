@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.example.tf.DTO.PedidoDTO_GET;
 import com.example.tf.domain.Pedido;
 import com.example.tf.service.PedidoService;
 
@@ -29,8 +30,13 @@ public class PedidoController{
 				PedidoService pedidoService;
 
 				@GetMapping
-				public ResponseEntity<List<Pedido>> findAll() {
-					return ResponseEntity.ok(pedidoService.findAll());
+				public ResponseEntity<List<PedidoDTO_GET>> findAll() {
+					List<PedidoDTO_GET> pedido = pedidoService.findAll();
+					if(pedido.isEmpty()) {
+					return  ResponseEntity.notFound().build();
+					}
+					return ResponseEntity.ok(pedido);
+				
 				}
 
 				@GetMapping("/{id}")

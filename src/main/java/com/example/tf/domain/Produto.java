@@ -15,6 +15,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+
+import com.example.tf.DTO.ProdutoDTO;
+
 @Entity
 @Table(name = "produto")
 public class Produto {
@@ -51,6 +54,33 @@ public class Produto {
 	@ManyToOne()
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
+	
+	
+	public Produto() {
+		super();
+	}
+	
+	public Produto(ProdutoDTO produtoDTO) {
+		this.nomeProduto = produtoDTO.getNomeProduto();
+		this.descricaoProduto = produtoDTO.getDescricaoProduto();
+		this.quantidadeEstoqueProduto = produtoDTO.getQuantidadeEstoqueProduto();
+		this.valorUnitarioProduto = produtoDTO.getValorUnitarioProduto();
+		this.categoria = produtoDTO.getCategoria();
+		this.dataCadastroProduto = LocalDate.now();
+	
+	}
+	public Produto(ProdutoDTO produtoDTO, Long id) {
+		this.nomeProduto = produtoDTO.getNomeProduto();
+		this.descricaoProduto = produtoDTO.getDescricaoProduto();
+		this.quantidadeEstoqueProduto = produtoDTO.getQuantidadeEstoqueProduto();
+		this.valorUnitarioProduto = produtoDTO.getValorUnitarioProduto();
+		this.categoria = produtoDTO.getCategoria();
+		this.dataCadastroProduto = LocalDate.now();
+		this.idProduto  = id;
+	
+	}
+	
+	
 
 	public Long getIdProduto() {
 		return idProduto;

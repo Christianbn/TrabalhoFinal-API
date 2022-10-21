@@ -1,5 +1,6 @@
 package com.example.tf.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,7 +9,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.tf.DTO.PedidoDTO_GET;
+import com.example.tf.domain.ItemPedido;
 import com.example.tf.domain.Pedido;
+import com.example.tf.repository.ItemPedidoRepository;
 import com.example.tf.repository.PedidoRepository;
 
 @Service
@@ -16,9 +20,23 @@ public class PedidoService {
 		
 		@Autowired
 		PedidoRepository pedidoRepository;
+		ItemPedidoRepository itemPedidoRepository;
 
-		public List<Pedido> findAll() {
-			return pedidoRepository.findAll();
+		public List<PedidoDTO_GET> findAll() {
+			List<Pedido> pedido = pedidoRepository.findAll();
+			List<PedidoDTO_GET> pedidoDTO_GET = new ArrayList<>();
+			List<ItemPedido> itemPedido = itemPedidoRepository.findAll();		
+			List<ItemPedido> itemPedidoTemp = new ArrayList<>();		
+			
+			for (Pedido pedidoTemp : pedido) {
+				for(ItemPedido i : itemPedido) {
+					if(i.getPedido().getIdPedido() == pedidoTemp.getIdPedido()) {
+						itemPedidoTemp.add(i);
+					}
+				}
+				pedidoDTO_GET.add(new PedidoDTO_GET(pedidoTemp, itemPedidoTemp));
+			}
+			return pedidoDTO_GET;
 		}
 
 		public Optional<Pedido> findById(Long id) {

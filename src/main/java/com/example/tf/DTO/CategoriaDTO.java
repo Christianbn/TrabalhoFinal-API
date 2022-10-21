@@ -9,14 +9,9 @@ import com.example.tf.domain.Categoria;
 
 public class CategoriaDTO {
 	
-	@NotBlank
-	@Size(max = 30)
+	
 	private String nomeCategoria;
-	
-	@NotBlank
-	@Size(max = 200)
 	private String descricaoCategoria;
-	
 	
 	public CategoriaDTO() {
 		super();

@@ -7,5 +7,7 @@ import com.example.tf.domain.ItemPedido;
 
 @Repository
 public interface ItemPedidoRepository extends JpaRepository<ItemPedido, Long>{
-
+	
+	
+	
 }

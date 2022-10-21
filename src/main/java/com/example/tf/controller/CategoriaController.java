@@ -32,32 +32,35 @@ public class CategoriaController {
 
 		@GetMapping
 		public ResponseEntity<List<Categoria>> findAll() {
-			return ResponseEntity.ok(categoriaService.findAll());
+			List<Categoria> categoria = categoriaService.findAll();
+			if(categoria.isEmpty()) {
+			return  ResponseEntity.notFound().build();
+			}
+			return ResponseEntity.ok(categoria);
 		}
 
 		@GetMapping("/{id}")
-		public ResponseEntity<Optional<CategoriaDTO>> findById(@PathVariable Long id) {
-			Optional<CategoriaDTO> categoriaDTO = categoriaService.findById(id);
-			if (!categoriaDTO.isPresent()) {
-				return ResponseEntity.notFound().build();
+		public ResponseEntity<Optional<Categoria>> findById(@PathVariable Long id) {
+			Optional<Categoria> categoria = categoriaService.findById(id);
+			if (categoria.isPresent()) {
+				return ResponseEntity.ok(categoria);
 			}
-			return ResponseEntity.ok(categoriaDTO);
+			return ResponseEntity.notFound().build();
 		}
 
 		@PostMapping
-		public ResponseEntity<Categoria> PostCategoria(@Valid @RequestBody Categoria categoria) {
-			Categoria categoriaTemp = categoriaService.PostCategoria(categoria);
-			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getIdCategoria())
-					.toUri();
+		public ResponseEntity<Categoria> PostCategoria(@Valid @RequestBody CategoriaDTO categoriaDTO) {
+			Categoria categoriaTemp = categoriaService.PostCategoria(categoriaDTO);
 			if (categoriaTemp == null) {
 				return ResponseEntity.notFound().build();
 			}
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoriaTemp.getIdCategoria())
+					.toUri();
 			return ResponseEntity.created(uri).body(categoriaTemp);
 		}
 
 		@PutMapping("/{id}")
 		public ResponseEntity<Optional<Categoria>> PutCategoria(@Valid @RequestBody Categoria categoria, @PathVariable Long id) {
-
 			Optional<Categoria> categoriaTemp = categoriaService.PutCategoria(categoria, id);
 			if (!categoriaTemp.isPresent()) {
 				return ResponseEntity.notFound().build();

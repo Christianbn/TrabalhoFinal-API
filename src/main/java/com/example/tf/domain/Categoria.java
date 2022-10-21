@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.example.tf.DTO.CategoriaDTO;
+
 @Entity
 @Table(name = "categoria")
 public class Categoria {
@@ -29,6 +31,17 @@ public class Categoria {
 	@Size(max = 200)
 	@Column(name="descricao_categoria", length = 200)
 	private String descricaoCategoria;
+
+	
+	
+	public Categoria() {
+		super();
+	}
+
+	public Categoria(CategoriaDTO categoriaDTO) {
+		this.nomeCategoria = categoriaDTO.getNomeCategoria();
+		this.descricaoCategoria = categoriaDTO.getDescricaoCategoria();
+	}
 
 	public Long getIdCategoria() {
 		return idCategoria;

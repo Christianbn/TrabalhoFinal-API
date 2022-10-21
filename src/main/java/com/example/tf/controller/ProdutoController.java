@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.example.tf.DTO.ProdutoDTO;
 import com.example.tf.domain.Produto;
 import com.example.tf.service.ProdutoService;
 
@@ -30,7 +31,11 @@ public class ProdutoController {
 
 	@GetMapping
 	public ResponseEntity<List<Produto>> findAll() {
-		return ResponseEntity.ok(produtoService.findAll());
+		List<Produto> produto = produtoService.findAll();
+		if(produto.isEmpty()) {
+		return  ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(produto);
 	}
 
 	@GetMapping("/{id}")
@@ -43,20 +48,19 @@ public class ProdutoController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Produto> PostProduto(@Valid @RequestBody Produto produto) {
-		Produto produtoTemp = produtoService.PostProduto(produto);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(produto.getIdProduto())
-				.toUri();
+	public ResponseEntity<Produto> PostProduto(@Valid @RequestBody ProdutoDTO produtoDTO) {
+		Produto produtoTemp = produtoService.PostProduto(produtoDTO);
 		if (produtoTemp == null) {
 			return ResponseEntity.notFound().build();
 		}
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(produtoTemp.getIdProduto())
+				.toUri();
 		return ResponseEntity.created(uri).body(produtoTemp);
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Optional<Produto>> PutProduto(@Valid @RequestBody Produto produto, @PathVariable Long id) {
-
-		Optional<Produto> produtoTemp = produtoService.PutProduto(produto, id);
+	public ResponseEntity<Optional<Produto>> PutProduto(@Valid @RequestBody ProdutoDTO produtoDTO, @PathVariable Long id) {
+		Optional<Produto> produtoTemp = produtoService.PutProduto(produtoDTO, id);
 		if (!produtoTemp.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}

@@ -20,38 +20,34 @@ public class CategoriaService {
 	CategoriaRepository categoriaRepository;
 
 	public List<Categoria> findAll() {
-		
-		
 		return categoriaRepository.findAll();
 	}
 
-	public Optional<CategoriaDTO> findById(Long id) {
+	public Optional<Categoria> findById(Long id) {
 		Optional<Categoria> categoria = categoriaRepository.findById(id);
-		
 		if(categoria.isPresent()) {
-		Optional<CategoriaDTO> categoriaDTO = Optional.ofNullable(new CategoriaDTO(categoria));
-		return categoriaDTO;
+		return categoria;
 		}
 		return null; 
 	}
 
 	@Transactional
-	public Categoria PostCategoria(Categoria categoria) {
-		//Optional<Categoria> categoriaTemp = categoriaRepository.findByNome(categoria.getNomeCategoria());
-		//if (categoriaTemp.isPresent()) {
-		//	return null;
-		//}
-
-		categoriaRepository.save(categoria);
-		return categoria;
+	public Categoria PostCategoria(CategoriaDTO categoriaDTO) {
+		Optional<Categoria> categoriaTemp = categoriaRepository.findByNomeCategoria(categoriaDTO.getNomeCategoria());
+		if (!categoriaTemp.isPresent()) {
+			Categoria categoria = new Categoria(categoriaDTO);
+			categoriaRepository.save(categoria);
+			return categoria;
+		}
+		return null;
 	}
 
 	public Optional<Categoria> PutCategoria(Categoria categoria, Long id) {
 		Optional<Categoria> categoriaTemp = categoriaRepository.findById(id);
 		if (categoriaTemp.isPresent()) {
 			categoria.setIdCategoria(id);
-			categoria = categoriaRepository.save(categoria);
-			return Optional.ofNullable(categoria);
+			categoriaRepository.save(categoria);
+			return Optional.of(categoria);
 		}
 		return null;
 	}
