@@ -36,9 +36,9 @@ public class ClienteService {
     
     @Transactional
     public Cliente PostCliente(ClienteDTO_POST clienteDTO_POST) throws EmailException, CpfException {      
-//      if (clienteRepository.findByEmailCliente(clienteDTO_POST.getEmailCliente()) != null) {
-//            throw new EmailException();
-//        }    
+      if (clienteRepository.findByEmailCliente(clienteDTO_POST.getEmailCliente()) != null) {
+            throw new EmailException();
+        }    
         if (clienteRepository.findByCpfCliente(clienteDTO_POST.getCpfCliente()) != null) {
 			throw new CpfException();
 	}
@@ -50,6 +50,19 @@ public class ClienteService {
         
         return clienteBanco;
     }
+    
+    @Transactional
+    public Optional<Cliente> PutCliente(Cliente cliente, Long id) {
+		Optional<Cliente> clienteTemp = clienteRepository.findById(id);
+		if (clienteTemp.isPresent()) {
+			cliente  = new Cliente(clienteTemp.get().getIdCliente(), cliente);
+			cliente = clienteRepository.saveAndFlush(cliente);
+			return Optional.of(cliente);
+		}
+		return null;
+	}
+    
+    
    
     public Boolean DeleteCliente(Long id) {
 		Optional<Cliente> categoriaTemp = clienteRepository.findById(id);
