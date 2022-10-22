@@ -34,8 +34,10 @@ public class PedidoService {
 						itemPedidoTemp.add(i);
 					}
 				}
+				
 				pedidoDTO_GET.add(new PedidoDTO_GET(pedidoTemp, itemPedidoTemp));
 			}
+			
 			return pedidoDTO_GET;
 		}
 

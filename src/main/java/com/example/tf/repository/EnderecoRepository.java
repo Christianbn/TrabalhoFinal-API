@@ -8,4 +8,6 @@ import com.example.tf.domain.Endereco;
 @Repository
 public interface EnderecoRepository extends JpaRepository<Endereco, Long>{
 
+	Endereco findByCepEndereco(String cepEndereco);
+
 }

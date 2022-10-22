@@ -13,13 +13,14 @@ public class ClienteDTO_POST {
 	private LocalDate dataNascimentoCliente;
 	private String cepEndereco; 
 	private String numeroEndereco;
+	private String complementoEndereco;
 
 	public ClienteDTO_POST() {
 		super();
 	}
 
 	public ClienteDTO_POST(String nomeCompletoCliente, String emailCliente, String cpfCliente, String telefoneCliente,
-			LocalDate dataNascimentoCliente, String cepEndereco, String numeroEndereco) {
+			LocalDate dataNascimentoCliente, String cepEndereco, String numeroEndereco, String complementoEndereco) {
 		super();
 		this.nomeCompletoCliente = nomeCompletoCliente;
 		this.emailCliente = emailCliente;
@@ -28,8 +29,18 @@ public class ClienteDTO_POST {
 		this.dataNascimentoCliente = dataNascimentoCliente;
 		this.cepEndereco = cepEndereco;
 		this.numeroEndereco = numeroEndereco;
+		this.complementoEndereco = complementoEndereco;
+		
 	}
 
+
+	public String getComplementoEndereco() {
+		return complementoEndereco;
+	}
+
+	public void setComplementoEndereco(String complementoEndereco) {
+		this.complementoEndereco = complementoEndereco;
+	}
 
 	public String getNomeCompletoCliente() {
 		return nomeCompletoCliente;

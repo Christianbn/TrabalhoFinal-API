@@ -1,17 +1,26 @@
 package com.example.tf.controller;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.example.tf.DTO.ClienteDTO_POST;
 import com.example.tf.domain.Cliente;
+import com.example.tf.exception.CpfException;
+import com.example.tf.exception.EmailException;
 import com.example.tf.service.ClienteService;
 
 @RestController
@@ -41,9 +50,20 @@ public class ClienteController {
 		return ResponseEntity.notFound().build();
 	}
 	
+	@PostMapping
+	public ResponseEntity<Cliente> PostItemPedido(@Valid @RequestBody ClienteDTO_POST clienteDTO) throws EmailException, CpfException {
+		Cliente clienteTemp = clienteService.PostCliente(clienteDTO);
+		if (clienteTemp == null) {
+			return ResponseEntity.notFound().build();
+		}
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clienteTemp.getIdCliente())
+				.toUri();
+		return ResponseEntity.created(uri).body(clienteTemp);
+	}
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		if (clienteService.DeleteCategoria(id)) {
+		if (clienteService.DeleteCliente(id)) {
 			return ResponseEntity.noContent().build();
 		}
 		

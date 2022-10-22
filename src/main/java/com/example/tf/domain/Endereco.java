@@ -50,6 +50,21 @@ public class Endereco {
 	@Size(max = 200)
 	@Column(name="complemento_endereco", length = 200)
 	private String complementoEndereco;
+	
+	@NotBlank
+	@Size(max = 2)
+	@Column(name = "uf_endereco", length = 2)
+	private String UF;
+	
+	
+
+	public String getUF() {
+		return UF;
+	}
+
+	public void setUF(String uF) {
+		UF = uF;
+	}
 
 	public Long getIdEndereco() {
 		return idEndereco;

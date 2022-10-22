@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.tf.DTO.ClienteDTO_POST;
 import com.example.tf.domain.Cliente;
+import com.example.tf.domain.Endereco;
 import com.example.tf.exception.CpfException;
 import com.example.tf.exception.EmailException;
 import com.example.tf.repository.ClienteRepository;
@@ -18,37 +19,39 @@ public class ClienteService {
    
     @Autowired
     ClienteRepository clienteRepository;
+    @Autowired
+    EnderecoService enderecoService;
     
     public List<Cliente> findAll() {
         return clienteRepository.findAll();
     }
     
     public Optional<Cliente> findById(Long id) {
-        return clienteRepository.findById(id);
-    }
+        Optional<Cliente> cliente = clienteRepository.findById(id);
+		if(cliente.isPresent()) {
+		return cliente;
+		}
+		return null; 
+	}
     
     @Transactional
-    public Cliente PostCliente(ClienteDTO_POST cliente) throws EmailException, CpfException {      
-       if (clienteRepository.findByEmailCliente(cliente.getEmailCliente()) != null) {
-            throw new EmailException();
-        }    
-        if (clienteRepository.findByCpfCliente(cliente.getCpfCliente()) != null) {
+    public Cliente PostCliente(ClienteDTO_POST clienteDTO_POST) throws EmailException, CpfException {      
+//      if (clienteRepository.findByEmailCliente(clienteDTO_POST.getEmailCliente()) != null) {
+//            throw new EmailException();
+//        }    
+        if (clienteRepository.findByCpfCliente(clienteDTO_POST.getCpfCliente()) != null) {
 			throw new CpfException();
-		}
-        
-        Cliente clienteBanco = new Cliente();
-        clienteBanco.setNomeCompletoCliente(cliente.getNomeCompletoCliente());
-        clienteBanco.setEmailCliente(cliente.getEmailCliente());
-        clienteBanco.setCpfCliente(cliente.getCpfCliente());
-        clienteBanco.setTelefoneCliente(cliente.getTelefoneCliente());
-        clienteBanco.setDataNascimentoCliente(cliente.getDataNascimentoCliente());
-             
+	}
+        Endereco endereco = enderecoService.buscar(clienteDTO_POST.getCepEndereco(), clienteDTO_POST.getNumeroEndereco(), clienteDTO_POST.getComplementoEndereco());
+     
+        Cliente clienteBanco = new Cliente(clienteDTO_POST, endereco);
+       
         clienteRepository.save(clienteBanco);
         
         return clienteBanco;
     }
    
-    public Boolean DeleteCategoria(Long id) {
+    public Boolean DeleteCliente(Long id) {
 		Optional<Cliente> categoriaTemp = clienteRepository.findById(id);
 		if (!categoriaTemp.isPresent()) {
 			return false;

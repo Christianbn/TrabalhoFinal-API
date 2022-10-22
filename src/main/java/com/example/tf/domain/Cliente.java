@@ -18,6 +18,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.example.tf.DTO.ClienteDTO_POST;
+
 @Entity
 @Table(name = "cliente")
 public class Cliente {
@@ -59,6 +61,42 @@ public class Cliente {
 	@OneToOne()
 	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
+	
+	
+
+	public Cliente(Long idCliente, @NotBlank @Size(max = 50) String nomeCompletoCliente,
+			@Email @NotBlank @Size(max = 80) String emailCliente, @CPF @NotBlank @Size(max = 11) String cpfCliente,
+			@NotBlank @Size(max = 40) String telefoneCliente, LocalDate dataNascimentoCliente,
+			@NotNull Endereco endereco) {
+		super();
+		this.idCliente = idCliente;
+		this.nomeCompletoCliente = nomeCompletoCliente;
+		this.emailCliente = emailCliente;
+		this.cpfCliente = cpfCliente;
+		this.telefoneCliente = telefoneCliente;
+		this.dataNascimentoCliente = dataNascimentoCliente;
+		this.endereco = endereco;
+	}
+	
+	
+	
+
+	public Cliente(ClienteDTO_POST clienteDTO, Endereco endereco) {
+		super();
+		this.nomeCompletoCliente = clienteDTO.getNomeCompletoCliente();
+		this.emailCliente = clienteDTO.getEmailCliente();
+		this.cpfCliente = clienteDTO.getCpfCliente();
+		this.telefoneCliente = clienteDTO.getTelefoneCliente();
+		this.dataNascimentoCliente = clienteDTO.getDataNascimentoCliente();
+		this.endereco = endereco;
+	}
+
+
+
+
+	public Cliente() {
+		super();
+	}
 
 	public Long getIdCliente() {
 		return idCliente;
