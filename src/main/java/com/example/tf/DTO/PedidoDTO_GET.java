@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.example.tf.domain.Cliente;
-import com.example.tf.domain.ItemPedido;
 import com.example.tf.domain.Pedido;
 
 public class PedidoDTO_GET {
@@ -17,14 +16,14 @@ public class PedidoDTO_GET {
 	private LocalDate dataEnvioPedido;
 	private String status; 
 	private Cliente cliente;
-	private List<ItemPedido> itemPedido;
+	private List<ItemPedidoDTO_GET> itemPedido;
 	
 	public PedidoDTO_GET() {
 		super();
 	}
 
 	public PedidoDTO_GET(Long idPedido, LocalDate dataPedido, LocalDate dataEntregaPedido, LocalDate dataEnvioPedido,
-			String status, Cliente cliente, List<ItemPedido> itemPedido) {
+			String status, Cliente cliente, List<ItemPedidoDTO_GET> itemPedido) {
 		super();
 		this.idPedido = idPedido;
 		this.dataPedido = dataPedido;
@@ -35,7 +34,7 @@ public class PedidoDTO_GET {
 		this.itemPedido = itemPedido;
 	}
 	
-	public PedidoDTO_GET(Pedido pedido, List<ItemPedido> itemPedido) {
+	public PedidoDTO_GET(Pedido pedido, List<ItemPedidoDTO_GET> itemPedido) {
 		this.idPedido = pedido.getIdPedido();
 		this.dataPedido = pedido.getDataPedido();
 		this.dataEntregaPedido = pedido.getDataEntregaPedido();
@@ -94,11 +93,11 @@ public class PedidoDTO_GET {
 		this.cliente = cliente;
 	}
 
-	public List<ItemPedido> getItemPedido() {
+	public List<ItemPedidoDTO_GET> getItemPedido() {
 		return itemPedido;
 	}
 
-	public void setItemPedidoDTO(List<ItemPedido> itemPedido) {
+	public void setItemPedidoDTO(List<ItemPedidoDTO_GET> itemPedido) {
 		this.itemPedido = itemPedido;
 	}
 	
