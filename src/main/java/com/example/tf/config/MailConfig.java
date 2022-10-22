@@ -17,6 +17,7 @@ public class MailConfig {
 		StringBuffer sb = new StringBuffer();
 		sb.append("Olá, " + cliente.getNomeCompletoCliente() + " seja muito bem-vindo a nossa loja! obrigado por comprar conosco e volte sempre! \n");
 		sb.append("ID do Pedido: " + relatorio.toString().replaceAll(",", "\n") + "\n");
+	
 		
 		
 		SimpleMailMessage message = new SimpleMailMessage();
@@ -26,4 +27,19 @@ public class MailConfig {
 		message.setTo(cliente.getEmailCliente());
 		javaMailSender.send(message);
 	}
+	
+	public void sendEmailCadastro(Cliente cliente) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("Olá, " + cliente.getNomeCompletoCliente() + " seja muito bem-vindo a nossa loja! obrigado por efetuar o cadastro em nosso site! \n");
+			
+		
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("serratec.api@gmail.com");
+		message.setSubject("Cliente cadastrado com sucesso");
+		message.setText(sb.toString());
+		message.setTo(cliente.getEmailCliente());
+		javaMailSender.send(message);
+	}
+	
+	
 }
