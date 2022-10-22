@@ -3,7 +3,7 @@ package com.example.tf.DTO;
 import java.time.LocalDate;
 
 
-public class ClienteDTO {
+public class ClienteDTO_POST {
 	
 	
 	private String nomeCompletoCliente; 
@@ -14,11 +14,11 @@ public class ClienteDTO {
 	private String cepEndereco; 
 	private String numeroEndereco;
 
-	public ClienteDTO() {
+	public ClienteDTO_POST() {
 		super();
 	}
 
-	public ClienteDTO(String nomeCompletoCliente, String emailCliente, String cpfCliente, String telefoneCliente,
+	public ClienteDTO_POST(String nomeCompletoCliente, String emailCliente, String cpfCliente, String telefoneCliente,
 			LocalDate dataNascimentoCliente, String cepEndereco, String numeroEndereco) {
 		super();
 		this.nomeCompletoCliente = nomeCompletoCliente;

@@ -69,7 +69,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(EmailException.class)
 	protected ResponseEntity<Object> handleEmailException(EmailException ex) {
 		List<ErroCampo> erros = new ArrayList<>();
-		erros.add(new ErroCampo("emailCliente", "CPF já cadastrado no sistema."));
+		erros.add(new ErroCampo("emailCliente", "E-mail já cadastrado no sistema."));
 
 		ErroResposta erroResposta = new ErroResposta(HttpStatus.BAD_REQUEST.value(), "Existem Campos Inválidos",
 				LocalDateTime.now(), erros);

@@ -7,5 +7,10 @@ import com.example.tf.domain.Cliente;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
+	
+	Cliente findByEmailCliente(String emailCliente);
 
+	Cliente findByCpfCliente(String cpfCliente);
+
+	
 }
