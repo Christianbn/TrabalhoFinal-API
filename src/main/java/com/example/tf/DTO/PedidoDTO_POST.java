@@ -69,7 +69,7 @@ public class PedidoDTO_POST {
 		this.cliente = cliente;
 	}
 
-	public List<ItemPedidoDTO_1> getItemPedidoDTO_POST() {
+	public List<ItemPedidoDTO_1> getItemPedidoDTO_1() {
 		return itemPedidoDTO_1;
 	}
 

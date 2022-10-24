@@ -9,72 +9,137 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.tf.DTO.ItemPedidoDTO_1;
 import com.example.tf.DTO.ItemPedidoDTO_GET;
 import com.example.tf.DTO.PedidoDTO_GET;
+import com.example.tf.DTO.PedidoDTO_POST;
 import com.example.tf.domain.ItemPedido;
 import com.example.tf.domain.Pedido;
+import com.example.tf.domain.Produto;
 import com.example.tf.repository.ItemPedidoRepository;
 import com.example.tf.repository.PedidoRepository;
+import com.example.tf.repository.ProdutoRepository;
 
 @Service
 public class PedidoService {
-		
-		@Autowired
-		PedidoRepository pedidoRepository;
-		@Autowired
-		ItemPedidoRepository itemPedidoRepository;
 
-		public List<PedidoDTO_GET> findAll() {
-			List<Pedido> pedido = pedidoRepository.findAll();
-			List<PedidoDTO_GET> pedidoDTO_GET = new ArrayList<>();
-			List<ItemPedido> itemPedido = itemPedidoRepository.findAll();		
-			List<ItemPedidoDTO_GET> itemPedidoTemp = new ArrayList<>();		
+	@Autowired
+	PedidoRepository pedidoRepository;
+	@Autowired
+	ItemPedidoRepository itemPedidoRepository;
+	@Autowired
+	ProdutoRepository produtoRepository;
+
+	public List<PedidoDTO_GET> findAll() {
+		List<Pedido> pedido = pedidoRepository.findAll();
+		List<PedidoDTO_GET> pedidoDTO_GET = new ArrayList<>();
+		List<ItemPedido> itemPedido = itemPedidoRepository.findAll();
+
+		for (Pedido pedidoTemp : pedido) {
+			List<ItemPedidoDTO_GET> itemPedidoTemp = new ArrayList<>();
 			
-			for (Pedido pedidoTemp : pedido) {
-				for(ItemPedido i : itemPedido) {
-					if(i.getPedido().getIdPedido() == pedidoTemp.getIdPedido()) {
+			for (ItemPedido i : itemPedido) {
+				if (i.getPedido() == pedidoTemp) {
 
-						itemPedidoTemp.add(new ItemPedidoDTO_GET(i));
-					}
+					itemPedidoTemp.add(new ItemPedidoDTO_GET(i));
 				}
-				
-				pedidoDTO_GET.add(new PedidoDTO_GET(pedidoTemp, itemPedidoTemp));
+			}
+			pedidoDTO_GET.add(new PedidoDTO_GET(pedidoTemp, itemPedidoTemp));
+		}
+
+		return pedidoDTO_GET;
+	}
+
+	public Optional<PedidoDTO_GET> findById(Long id) {
+		Optional<Pedido> pedido = pedidoRepository.findById(id);
+		if (pedido.isPresent()) {
+
+			List<ItemPedido> itemPedido = itemPedidoRepository.findAll();
+			List<ItemPedidoDTO_GET> itemPedidoTemp = new ArrayList<>();
+			
+			for (ItemPedido i : itemPedido) {
+				if (i.getPedido().getIdPedido() == pedido.get().getIdPedido()) {
+
+					itemPedidoTemp.add(new ItemPedidoDTO_GET(i));
+					
+				}
 			}
 			
-			return pedidoDTO_GET;
+			PedidoDTO_GET pedidoDTO = new PedidoDTO_GET(pedido.get(), itemPedidoTemp);
+			return Optional.of(pedidoDTO);
 		}
+		return null;
+	}
 
-		public Optional<Pedido> findById(Long id) {
-			return pedidoRepository.findById(id);
+	@Transactional
+	public PedidoDTO_GET PostPedido(PedidoDTO_POST pedidoDTO) {
+		
+		Pedido pedido = new Pedido(pedidoDTO);
+		pedidoRepository.save(pedido);
+		
+		for(ItemPedidoDTO_1 i : pedidoDTO.getItemPedidoDTO_1()) {
+			
+			Optional<Produto> produto = produtoRepository.findById(i.getProduto().getIdProduto());
+			
+			ItemPedido iP = new ItemPedido(i, pedido, produto.get());
+			itemPedidoRepository.save(iP);
+
 		}
+		List<ItemPedido> itemPedido = itemPedidoRepository.findAll();
+		List<ItemPedidoDTO_GET> itemPedidoTemp = new ArrayList<>();
+		
+		Double valorTotal = 0.0;
+		for (ItemPedido i : itemPedido) {
+			if (i.getPedido().getIdPedido() == pedido.getIdPedido()) {
 
-		@Transactional
-		public Pedido PostPedido(Pedido pedido) {
-//			Optional<Pedido> pedidoTemp = PedidoRepository.findByNome(pedido.getNomePedido());
-//			if (pedidoTemp.isPresent()) {
-//				return null;
-//			}
-
-			pedidoRepository.save(pedido);
-			return pedido;
-		}
-
-		public Optional<Pedido> PutPedido(Pedido pedido, Long id) {
-			Optional<Pedido> pedidoTemp = pedidoRepository.findById(id);
-			if (pedidoTemp.isPresent()) {
-				pedido.setIdPedido(id);
-				pedido = pedidoRepository.save(pedido);
-				return Optional.ofNullable(pedido);
+				itemPedidoTemp.add(new ItemPedidoDTO_GET(i));
+				valorTotal += i.getValorLiquidoItemPedido();
 			}
-			return null;
 		}
+		pedido.setValorTotalPedido(valorTotal);
+		PedidoDTO_GET pedidoDTO_GET = new PedidoDTO_GET(pedido, itemPedidoTemp);
+		return pedidoDTO_GET;
+	}
 
-		public Boolean Delete(Long id) {
-			Optional<Pedido> pedidoTemp = pedidoRepository.findById(id);
-			if (!pedidoTemp.isPresent()) {
-				return false;
-			}
-			pedidoRepository.deleteById(id);
-			return true;
+	
+	
+	public Optional<PedidoDTO_GET> PutPedido(PedidoDTO_POST pedidoDTO, Long id) {
+		Pedido pedido = new Pedido(pedidoDTO, id);
+		int x = 0;
+		pedidoRepository.save(pedido);
+		List<ItemPedido> itemPedidoList = itemPedidoRepository.findByPedido(pedido);
+		List<ItemPedidoDTO_1> pedidoDTOList = pedidoDTO.getItemPedidoDTO_1();
+		for(ItemPedido j : itemPedidoList) {
+		for(x++; x < pedidoDTOList.size();) {
+				Optional<Produto> produto = produtoRepository.findById(pedidoDTOList.get(x).getProduto().getIdProduto());
+				ItemPedido iP = new ItemPedido(pedidoDTOList.get(x), pedido, produto.get(), j.getIdItemPedido());
+				itemPedidoRepository.save(iP);
+				x++;
+				break;
 		}
+		}
+		List<ItemPedido> itemPedido = itemPedidoRepository.findAll();
+		List<ItemPedidoDTO_GET> itemPedidoTemp = new ArrayList<>();
+		
+		Double valorTotal = 0.0;
+		for (ItemPedido i : itemPedido) {
+			if (i.getPedido().getIdPedido() == pedido.getIdPedido()) {
+
+				itemPedidoTemp.add(new ItemPedidoDTO_GET(i));
+				valorTotal += i.getValorLiquidoItemPedido();
+			}
+		}
+		pedido.setValorTotalPedido(valorTotal);
+		PedidoDTO_GET pedidoDTO_GET = new PedidoDTO_GET(pedido, itemPedidoTemp);
+		return Optional.of(pedidoDTO_GET);
+	}
+
+	public Boolean Delete(Long id) {
+		Optional<Pedido> pedidoTemp = pedidoRepository.findById(id);
+		if (!pedidoTemp.isPresent()) {
+			return false;
+		}
+		pedidoRepository.deleteById(id);
+		return true;
+	}
 }

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.tf.DTO.PedidoDTO_GET;
-import com.example.tf.domain.Pedido;
+import com.example.tf.DTO.PedidoDTO_POST;
 import com.example.tf.service.PedidoService;
 
 @RestController
@@ -40,8 +40,8 @@ public class PedidoController{
 				}
 
 				@GetMapping("/{id}")
-				public ResponseEntity<Optional<Pedido>> findById(@PathVariable Long id) {
-					Optional<Pedido> pedido = pedidoService.findById(id);
+				public ResponseEntity<Optional<PedidoDTO_GET>> findById(@PathVariable Long id) {
+					Optional<PedidoDTO_GET> pedido = pedidoService.findById(id);
 					if (!pedido.isPresent()) {
 						return ResponseEntity.notFound().build();
 					}
@@ -49,20 +49,20 @@ public class PedidoController{
 				}
 
 				@PostMapping
-				public ResponseEntity<Pedido> PostPedido(@Valid @RequestBody Pedido pedido) {
-					Pedido pedidoTemp = pedidoService.PostPedido(pedido);
-					URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(pedido.getIdPedido())
-							.toUri();
+				public ResponseEntity<PedidoDTO_GET> PostPedido(@Valid @RequestBody PedidoDTO_POST pedidoDTO) {
+					PedidoDTO_GET pedidoTemp = pedidoService.PostPedido(pedidoDTO);
 					if (pedidoTemp == null) {
 						return ResponseEntity.notFound().build();
 					}
+					URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(pedidoTemp.getIdPedido())
+							.toUri();
 					return ResponseEntity.created(uri).body(pedidoTemp);
 				}
 
 				@PutMapping("/{id}")
-				public ResponseEntity<Optional<Pedido>> PutPedido(@Valid @RequestBody Pedido pedido, @PathVariable Long id) {
+				public ResponseEntity<Optional<PedidoDTO_GET>> PutPedido(@Valid @RequestBody PedidoDTO_POST pedidoDTO, @PathVariable Long id) {
 
-					Optional<Pedido> pedidoTemp = pedidoService.PutPedido(pedido, id);
+					Optional<PedidoDTO_GET> pedidoTemp = pedidoService.PutPedido(pedidoDTO, id);
 					if (!pedidoTemp.isPresent()) {
 						return ResponseEntity.notFound().build();
 					}

@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.example.tf.DTO.ItemPedidoDTO_1;
+
 @Entity
 @Table(name = "itempedido")
 public class ItemPedido {
@@ -51,6 +53,30 @@ public class ItemPedido {
 	@ManyToOne
 	@JoinColumn(name = "id_pedido")
 	private Pedido pedido;
+
+	public ItemPedido(ItemPedidoDTO_1 i, Pedido pedido, Produto produto) {
+		this.produto = produto;
+		this.quantidadeItemPedido = i.getQuantidadeItemPedido();
+		this.percentualDescontoItemPedido = i.getPercentualDescontoItemPedido();
+		this.precoVendaItemPedido = produto.getValorUnitarioProduto();
+		this.valorBrutoItemPedido = (produto.getValorUnitarioProduto() * quantidadeItemPedido);
+		this.valorLiquidoItemPedido = (valorBrutoItemPedido - (valorBrutoItemPedido * (percentualDescontoItemPedido/100)));
+		this.pedido = pedido;
+	}
+	public ItemPedido(ItemPedidoDTO_1 i, Pedido pedido, Produto produto, Long id) {
+		this.produto = produto;
+		this.quantidadeItemPedido = i.getQuantidadeItemPedido();
+		this.percentualDescontoItemPedido = i.getPercentualDescontoItemPedido();
+		this.precoVendaItemPedido = produto.getValorUnitarioProduto();
+		this.valorBrutoItemPedido = (produto.getValorUnitarioProduto() * quantidadeItemPedido);
+		this.valorLiquidoItemPedido = (valorBrutoItemPedido - (valorBrutoItemPedido * (percentualDescontoItemPedido/100)));
+		this.pedido = pedido;
+		this.idItemPedido = id;
+	}
+	
+	public ItemPedido() {
+		
+	}
 
 	public Long getIdItemPedido() {
 		return idItemPedido;

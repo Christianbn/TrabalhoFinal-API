@@ -15,6 +15,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.example.tf.DTO.PedidoDTO_GET;
+import com.example.tf.DTO.PedidoDTO_POST;
+
 @Entity
 @Table(name = "pedido")
 public class Pedido {
@@ -40,13 +43,57 @@ public class Pedido {
 	private String status; 
 
 	
-	@Column(name="valor_total_pedido", nullable = false, length = 2)
+	@Column(name="valor_total_pedido", nullable = false, length = 20)
 	private Double valorTotalPedido;
 	
 	@NotNull
 	@ManyToOne()
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
+	
+	public Pedido() {
+		
+	}
+
+	public Pedido(PedidoDTO_POST pedidoDTO) {
+		if(pedidoDTO.getDataPedido().isBefore(LocalDate.now())) {
+			this.dataPedido = LocalDate.now();
+		}else {
+			this.dataPedido = pedidoDTO.getDataPedido();
+		}
+		this.dataEntregaPedido = pedidoDTO.getDataEntregaPedido();
+		this.dataEnvioPedido = pedidoDTO.getDataEnvioPedido();
+		this.status = pedidoDTO.getStatus();
+		this.cliente = pedidoDTO.getCliente();
+		this.valorTotalPedido = 0.0;
+	}
+	
+	public Pedido(PedidoDTO_POST pedidoDTO, long id) {
+		if(pedidoDTO.getDataPedido().isBefore(LocalDate.now())) {
+			this.dataPedido = LocalDate.now();
+		}else {
+			this.dataPedido = pedidoDTO.getDataPedido();
+		}
+		this.dataEntregaPedido = pedidoDTO.getDataEntregaPedido();
+		this.dataEnvioPedido = pedidoDTO.getDataEnvioPedido();
+		this.status = pedidoDTO.getStatus();
+		this.cliente = pedidoDTO.getCliente();
+		this.idPedido = id;
+		this.valorTotalPedido = 0.0;
+	}
+	
+	
+	public Pedido(PedidoDTO_GET pedidoDTO) {
+		if(pedidoDTO.getDataPedido().isBefore(LocalDate.now())) {
+			this.dataPedido = LocalDate.now();
+		}else {
+			this.dataPedido = pedidoDTO.getDataPedido();
+		}
+		this.dataEntregaPedido = pedidoDTO.getDataEntregaPedido();
+		this.dataEnvioPedido = pedidoDTO.getDataEnvioPedido();
+		this.status = pedidoDTO.getStatus();
+		this.cliente = pedidoDTO.getCliente();
+	}
 
 	public Long getIdPedido() {
 		return idPedido;
