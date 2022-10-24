@@ -50,7 +50,7 @@ public class ItemPedido {
 	private Produto produto;
 	
 	@NotNull
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name = "id_pedido")
 	private Pedido pedido;
 

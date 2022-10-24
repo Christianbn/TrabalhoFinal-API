@@ -110,7 +110,7 @@ public class PedidoService {
 		List<ItemPedidoDTO_1> pedidoDTOList = pedidoDTO.getItemPedidoDTO_1();
 		
 		
-		for(int i = 0; i < itemPedidoList.size() && i < pedidoDTOList.size(); i++ ) {
+		for(int i = 0;i < pedidoDTOList.size() && i < itemPedidoList.size(); i++ ) {
 			if(itemPedidoList.get(i).getProduto() == pedidoDTOList.get(i).getProduto()) {
 				ItemPedido iP = itemPedidoList.get(i);
 				iP.setQuantidadeItemPedido(pedidoDTOList.get(i).getQuantidadeItemPedido());
@@ -123,14 +123,8 @@ public class PedidoService {
 					iP.setProduto(pedidoDTOList.get(i).getProduto());
 					itemPedidoRepository.save(iP);
 				}
-			if(itemPedidoList.get(i) != null && pedidoDTOList.get(i) == null) {
-				break;
-			}else if (itemPedidoList.get(i) == null && pedidoDTOList.get(i) != null) {
-				Optional<Produto> produto = produtoRepository.findById(pedidoDTOList.get(i).getProduto().getIdProduto());
-				ItemPedido iP = new ItemPedido(pedidoDTOList.get(i), pedido, produto.get());
-				itemPedidoRepository.save(iP);
-				}
 		}
+		
 		List<ItemPedido> itemPedido = itemPedidoRepository.findAll();
 		List<ItemPedidoDTO_GET> itemPedidoTemp = new ArrayList<>();
 		
@@ -152,6 +146,8 @@ public class PedidoService {
 		if (!pedidoTemp.isPresent()) {
 			return false;
 		}
+		List<ItemPedido> itemPedidoList = itemPedidoRepository.findByPedido(pedidoTemp.get());
+		for(ItemPedido i : itemPedidoList) itemPedidoRepository.delete(i);
 		pedidoRepository.deleteById(id);
 		return true;
 	}
