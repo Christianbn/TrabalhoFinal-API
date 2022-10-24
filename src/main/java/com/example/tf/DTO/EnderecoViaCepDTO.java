@@ -1,13 +1,43 @@
 package com.example.tf.DTO;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import io.swagger.annotations.ApiModelProperty;
 
 public class EnderecoViaCepDTO {
+	
+	@NotBlank
+	@Size(max = 8)
+	@ApiModelProperty(value="CEP do endereço do cliente", required = true)
 	private String cep;
+	
+	@NotBlank
+	@Size(max = 80)
+	@ApiModelProperty(value="Logradouro do cliente", required = true)
 	private String logradouro;
+	
+	@NotBlank
+	@Size(max = 200)
+	@ApiModelProperty(value="Complemento do endereço do cliente", required = true)
 	private String complemento;
+		
+	@NotBlank
+	@Size(max = 50)
+	@ApiModelProperty(value="Bairro do cliente", required = true)
 	private String bairro;
+	
+	@NotBlank
+	@Size(max = 80)
+	@ApiModelProperty(value="Cidade do cliente", required = true)
 	private String localidade;
-	private String uf;
+	
+	@NotBlank
+	@Size(max = 2)
+	@ApiModelProperty(value="UF do cliente", required = true)
+		private String uf;
+	
+	
 	
 	public String getCep() {
 		return cep;

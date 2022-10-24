@@ -1,12 +1,24 @@
 package com.example.tf.DTO;
 
+import javax.validation.constraints.NotNull;
+
 import com.example.tf.domain.Produto;
+
+import io.swagger.annotations.ApiModelProperty;
 
 public class ItemPedidoDTO_1 {
 
 	
+	@NotNull
+	@ApiModelProperty(value = "Quantidade de ItemPedido")
 	private Integer quantidadeItemPedido; 
+	
+	@NotNull
+	@ApiModelProperty(value = "Percentual de desconto do ItemPedido")
 	private Double percentualDescontoItemPedido; 
+	
+	@NotNull
+	@ApiModelProperty(value = "Identificador único do produto")
 	private Produto produto;
 	
 	public ItemPedidoDTO_1() {

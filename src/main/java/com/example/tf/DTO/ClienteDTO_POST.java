@@ -2,17 +2,55 @@ package com.example.tf.DTO;
 
 import java.time.LocalDate;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.br.CPF;
+
+import io.swagger.annotations.ApiModelProperty;
+
 
 public class ClienteDTO_POST {
 	
-	
+	@NotBlank
+	@Size(max = 50)
+	@ApiModelProperty(value="Nome completo do cliente", required = true)
 	private String nomeCompletoCliente; 
+	
+	@Email
+	@NotBlank
+	@Size(max = 80)
+	@ApiModelProperty(value="E-mail do cliente", required = true)
 	private String emailCliente;
+	
+	@CPF
+	@NotBlank
+	@Size(max = 11)
+	@ApiModelProperty(value="CPF do cliente", required = true)
 	private String cpfCliente; 
+	
+	@NotBlank
+	@Size(max = 40)
+	@ApiModelProperty(value="Telefone do cliente", required = true)
 	private String telefoneCliente;
+	
+	@ApiModelProperty(value="Data de nascimento do cliente")
 	private LocalDate dataNascimentoCliente;
+	
+	@NotBlank
+	@Size(max = 8)
+	@ApiModelProperty(value="CEP do endereço do cliente", required = true)
 	private String cepEndereco; 
+	
+	@NotBlank
+	@Size(max = 20)
+	@ApiModelProperty(value="Número do endereço do cliente", required = true)
 	private String numeroEndereco;
+	
+	@NotBlank
+	@Size(max = 200)
+	@ApiModelProperty(value="Complemento do endereço do cliente", required = true)
 	private String complementoEndereco;
 
 	public ClienteDTO_POST() {
