@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.tf.DTO.PedidoDTO_GET;
 import com.example.tf.DTO.PedidoDTO_POST;
+import com.example.tf.exception.EstoqueException;
 import com.example.tf.service.PedidoService;
 
 @RestController
@@ -49,7 +50,7 @@ public class PedidoController{
 				}
 
 				@PostMapping
-				public ResponseEntity<PedidoDTO_GET> PostPedido(@Valid @RequestBody PedidoDTO_POST pedidoDTO) {
+				public ResponseEntity<PedidoDTO_GET> PostPedido(@Valid @RequestBody PedidoDTO_POST pedidoDTO) throws EstoqueException {
 					PedidoDTO_GET pedidoTemp = pedidoService.PostPedido(pedidoDTO);
 					if (pedidoTemp == null) {
 						return ResponseEntity.notFound().build();
@@ -60,7 +61,7 @@ public class PedidoController{
 				}
 
 				@PutMapping("/{id}")
-				public ResponseEntity<Optional<PedidoDTO_GET>> PutPedido(@Valid @RequestBody PedidoDTO_POST pedidoDTO, @PathVariable Long id) {
+				public ResponseEntity<Optional<PedidoDTO_GET>> PutPedido(@Valid @RequestBody PedidoDTO_POST pedidoDTO, @PathVariable Long id) throws EstoqueException {
 
 					Optional<PedidoDTO_GET> pedidoTemp = pedidoService.PutPedido(pedidoDTO, id);
 					if (!pedidoTemp.isPresent()) {

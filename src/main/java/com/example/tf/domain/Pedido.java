@@ -15,7 +15,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.example.tf.DTO.PedidoDTO_GET;
 import com.example.tf.DTO.PedidoDTO_POST;
 
 @Entity
@@ -58,10 +57,13 @@ public class Pedido {
 	public Pedido(PedidoDTO_POST pedidoDTO) {
 		if(pedidoDTO.getDataPedido().isBefore(LocalDate.now())) {
 			this.dataPedido = LocalDate.now();
+			this.dataEnvioPedido = LocalDate.now().plusDays(1);
+			this.dataEntregaPedido = LocalDate.now().plusDays(7);
 		}else {
 			this.dataPedido = pedidoDTO.getDataPedido();
+			this.dataEnvioPedido = pedidoDTO.getDataEnvioPedido();
+			this.dataEntregaPedido = pedidoDTO.getDataEntregaPedido();
 		}
-		this.dataEntregaPedido = pedidoDTO.getDataEntregaPedido();
 		this.dataEnvioPedido = pedidoDTO.getDataEnvioPedido();
 		this.status = pedidoDTO.getStatus();
 		this.cliente = pedidoDTO.getCliente();
@@ -71,30 +73,18 @@ public class Pedido {
 	public Pedido(PedidoDTO_POST pedidoDTO, long id) {
 		if(pedidoDTO.getDataPedido().isBefore(LocalDate.now())) {
 			this.dataPedido = LocalDate.now();
+			this.dataEnvioPedido = LocalDate.now().plusDays(1);
+			this.dataEntregaPedido = LocalDate.now().plusDays(7);
 		}else {
 			this.dataPedido = pedidoDTO.getDataPedido();
+			this.dataEnvioPedido = pedidoDTO.getDataEnvioPedido();
+			this.dataEntregaPedido = pedidoDTO.getDataEntregaPedido();
 		}
-		this.dataEntregaPedido = pedidoDTO.getDataEntregaPedido();
-		this.dataEnvioPedido = pedidoDTO.getDataEnvioPedido();
 		this.status = pedidoDTO.getStatus();
 		this.cliente = pedidoDTO.getCliente();
 		this.idPedido = id;
 		this.valorTotalPedido = 0.0;
 	}
-	
-	
-	public Pedido(PedidoDTO_GET pedidoDTO) {
-		if(pedidoDTO.getDataPedido().isBefore(LocalDate.now())) {
-			this.dataPedido = LocalDate.now();
-		}else {
-			this.dataPedido = pedidoDTO.getDataPedido();
-		}
-		this.dataEntregaPedido = pedidoDTO.getDataEntregaPedido();
-		this.dataEnvioPedido = pedidoDTO.getDataEnvioPedido();
-		this.status = pedidoDTO.getStatus();
-		this.cliente = pedidoDTO.getCliente();
-	}
-
 	public Long getIdPedido() {
 		return idPedido;
 	}

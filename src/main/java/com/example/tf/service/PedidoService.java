@@ -16,6 +16,7 @@ import com.example.tf.DTO.PedidoDTO_POST;
 import com.example.tf.domain.ItemPedido;
 import com.example.tf.domain.Pedido;
 import com.example.tf.domain.Produto;
+import com.example.tf.exception.EstoqueException;
 import com.example.tf.repository.ItemPedidoRepository;
 import com.example.tf.repository.PedidoRepository;
 import com.example.tf.repository.ProdutoRepository;
@@ -72,18 +73,22 @@ public class PedidoService {
 	}
 
 	@Transactional
-	public PedidoDTO_GET PostPedido(PedidoDTO_POST pedidoDTO) {
+	public PedidoDTO_GET PostPedido(PedidoDTO_POST pedidoDTO) throws EstoqueException{
 		
+			
 		Pedido pedido = new Pedido(pedidoDTO);
 		pedidoRepository.save(pedido);
 		
 		for(ItemPedidoDTO_1 i : pedidoDTO.getItemPedidoDTO_1()) {
-			
 			Optional<Produto> produto = produtoRepository.findById(i.getProduto().getIdProduto());
-			
+			if(i.getQuantidadeItemPedido() <= i.getProduto().getQuantidadeEstoqueProduto()) {
 			ItemPedido iP = new ItemPedido(i, pedido, produto.get());
 			itemPedidoRepository.save(iP);
-
+			produto.get().setQuantidadeEstoqueProduto(iP.getQuantidadeItemPedido());
+			produtoRepository.save(produto.get());
+			}else {
+			 throw new EstoqueException();
+			}
 		}
 		List<ItemPedido> itemPedido = itemPedidoRepository.findAll();
 		List<ItemPedidoDTO_GET> itemPedidoTemp = new ArrayList<>();
@@ -103,7 +108,7 @@ public class PedidoService {
 
 	
 	
-	public Optional<PedidoDTO_GET> PutPedido(PedidoDTO_POST pedidoDTO, Long id) {
+	public Optional<PedidoDTO_GET> PutPedido(PedidoDTO_POST pedidoDTO, Long id) throws EstoqueException {
 		Pedido pedido = new Pedido(pedidoDTO, id);
 		pedidoRepository.save(pedido);
 		List<ItemPedido> itemPedidoList = itemPedidoRepository.findByPedido(pedido);
@@ -114,6 +119,12 @@ public class PedidoService {
 			if(itemPedidoList.get(i).getProduto() == pedidoDTOList.get(i).getProduto()) {
 				ItemPedido iP = itemPedidoList.get(i);
 				iP.setQuantidadeItemPedido(pedidoDTOList.get(i).getQuantidadeItemPedido());
+				if(iP.getQuantidadeItemPedido() > itemPedidoList.get(i).getQuantidadeItemPedido()) {
+					if(iP.getQuantidadeItemPedido() > iP.getProduto().getQuantidadeEstoqueProduto()+itemPedidoList.get(i).getQuantidadeItemPedido()) {
+						throw new EstoqueException();
+					}
+					iP.getProduto().setQuantidadeEstoqueProduto(iP.getProduto().getQuantidadeEstoqueProduto() - (iP.getQuantidadeItemPedido() - itemPedidoList.get(i).getQuantidadeItemPedido()));   
+				}
 				iP.setPercentualDescontoItemPedido(pedidoDTOList.get(i).getPercentualDescontoItemPedido());
 				itemPedidoRepository.save(iP);
 				}else if(itemPedidoList.get(i).getProduto() != pedidoDTOList.get(i).getProduto()) {

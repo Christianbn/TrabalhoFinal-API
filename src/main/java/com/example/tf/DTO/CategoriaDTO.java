@@ -9,7 +9,7 @@ import com.example.tf.domain.Categoria;
 
 public class CategoriaDTO {
 	
-	
+
 	private String nomeCategoria;
 	private String descricaoCategoria;
 	
