@@ -105,18 +105,31 @@ public class PedidoService {
 	
 	public Optional<PedidoDTO_GET> PutPedido(PedidoDTO_POST pedidoDTO, Long id) {
 		Pedido pedido = new Pedido(pedidoDTO, id);
-		int x = 0;
 		pedidoRepository.save(pedido);
 		List<ItemPedido> itemPedidoList = itemPedidoRepository.findByPedido(pedido);
 		List<ItemPedidoDTO_1> pedidoDTOList = pedidoDTO.getItemPedidoDTO_1();
-		for(ItemPedido j : itemPedidoList) {
-		for(x++; x < pedidoDTOList.size();) {
-				Optional<Produto> produto = produtoRepository.findById(pedidoDTOList.get(x).getProduto().getIdProduto());
-				ItemPedido iP = new ItemPedido(pedidoDTOList.get(x), pedido, produto.get(), j.getIdItemPedido());
+		
+		
+		for(int i = 0; i < itemPedidoList.size() && i < pedidoDTOList.size(); i++ ) {
+			if(itemPedidoList.get(i).getProduto() == pedidoDTOList.get(i).getProduto()) {
+				ItemPedido iP = itemPedidoList.get(i);
+				iP.setQuantidadeItemPedido(pedidoDTOList.get(i).getQuantidadeItemPedido());
+				iP.setPercentualDescontoItemPedido(pedidoDTOList.get(i).getPercentualDescontoItemPedido());
 				itemPedidoRepository.save(iP);
-				x++;
+				}else if(itemPedidoList.get(i).getProduto() != pedidoDTOList.get(i).getProduto()) {
+					ItemPedido iP = itemPedidoList.get(i);
+					iP.setQuantidadeItemPedido(pedidoDTOList.get(i).getQuantidadeItemPedido());
+					iP.setPercentualDescontoItemPedido(pedidoDTOList.get(i).getPercentualDescontoItemPedido());
+					iP.setProduto(pedidoDTOList.get(i).getProduto());
+					itemPedidoRepository.save(iP);
+				}
+			if(itemPedidoList.get(i) != null && pedidoDTOList.get(i) == null) {
 				break;
-		}
+			}else if (itemPedidoList.get(i) == null && pedidoDTOList.get(i) != null) {
+				Optional<Produto> produto = produtoRepository.findById(pedidoDTOList.get(i).getProduto().getIdProduto());
+				ItemPedido iP = new ItemPedido(pedidoDTOList.get(i), pedido, produto.get());
+				itemPedidoRepository.save(iP);
+				}
 		}
 		List<ItemPedido> itemPedido = itemPedidoRepository.findAll();
 		List<ItemPedidoDTO_GET> itemPedidoTemp = new ArrayList<>();
