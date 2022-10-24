@@ -21,6 +21,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.tf.domain.ItemPedido;
 import com.example.tf.service.ItemPedidoService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("/api/ItemPedido")
 public class ItemPedidoController {
@@ -29,11 +33,25 @@ public class ItemPedidoController {
 				ItemPedidoService itemPedidoService;
 
 				@GetMapping
+				@ApiOperation(value = "Lista todos os itens de todos os pedidos", notes = "Lista todos os itens de todos os pedidos")
+				@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna todos os itens do pedido"),
+						@ApiResponse(code = 401, message = "Erro de autenticação"),
+						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+						@ApiResponse(code = 404, message = "Recurso não encontrado"),
+						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+				
 				public ResponseEntity<List<ItemPedido>> findAll() {
 					return ResponseEntity.ok(itemPedidoService.findAll()); 
 				}
 
 				@GetMapping("/{id}")
+				@ApiOperation(value = "Retorna um item de um pedido", notes = "Retorna um item de um pedido")
+				@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna um item de um pedido"),
+						@ApiResponse(code = 401, message = "Erro de autenticação"),
+						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+						@ApiResponse(code = 404, message = "Recurso não encontrado"),
+						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+				
 				public ResponseEntity<Optional<ItemPedido>> findById(@PathVariable Long id) {
 					Optional<ItemPedido> itemPedido = itemPedidoService.findById(id);
 					if (!itemPedido.isPresent()) {
@@ -43,6 +61,13 @@ public class ItemPedidoController {
 				}
 
 				@PostMapping
+				@ApiOperation(value = "Insere os dados do item pedido", notes = "Inserir item pedido")
+				@ApiResponses(value = { @ApiResponse(code = 201, message = "Item pedido adicionado"),
+						@ApiResponse(code = 401, message = "Erro de autenticação"),
+						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+						@ApiResponse(code = 404, message = "Recurso não encontrado"),
+						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+				
 				public ResponseEntity<ItemPedido> PostItemPedido(@Valid @RequestBody ItemPedido itemPedido) {
 					ItemPedido itemPedidoTemp = itemPedidoService.PostItemPedido(itemPedido);
 					URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(itemPedido.getIdItemPedido())
@@ -54,6 +79,13 @@ public class ItemPedidoController {
 				}
 
 				@PutMapping("/{id}")
+				@ApiOperation(value = "Atualiza dados de um item pedido", notes = "Atualizar item pedido")
+				@ApiResponses(value = { @ApiResponse(code = 200, message = "Item pedido atualizado"),
+						@ApiResponse(code = 401, message = "Erro de autenticação"),
+						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+						@ApiResponse(code = 404, message = "Recurso não encontrado"),
+						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+				
 				public ResponseEntity<Optional<ItemPedido>> PutItemPedido(@Valid @RequestBody ItemPedido itemPedido, @PathVariable Long id) {
 
 					Optional<ItemPedido> itemPedidoTemp = itemPedidoService.PutItemPedido(itemPedido, id);
@@ -65,6 +97,14 @@ public class ItemPedidoController {
 				}
 
 				@DeleteMapping("/{id}")
+				@ApiOperation(value = "Remove um item pedido", notes = "Remover item pedido")
+				@ApiResponses(value = { @ApiResponse(code = 200, message = "Item pedido removido"),
+						@ApiResponse(code = 204, message = "Sem conteúdo"),
+						@ApiResponse(code = 401, message = "Erro de autenticação"),
+						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+						@ApiResponse(code = 404, message = "Recurso não encontrado"),
+						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+				
 				public ResponseEntity<Void> delete(@PathVariable Long id) {
 					if (itemPedidoService.Delete(id)) {
 						return ResponseEntity.noContent().build();

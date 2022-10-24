@@ -23,6 +23,10 @@ import com.example.tf.DTO.PedidoDTO_POST;
 import com.example.tf.exception.EstoqueException;
 import com.example.tf.service.PedidoService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("/api/pedido")
 public class PedidoController{
@@ -31,6 +35,13 @@ public class PedidoController{
 				PedidoService pedidoService;
 
 				@GetMapping
+				@ApiOperation(value = "Lista todos os pedidos", notes = "Listagem de pedidos")
+				@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna todos os pedidos"),
+						@ApiResponse(code = 401, message = "Erro de autenticação"),
+						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+						@ApiResponse(code = 404, message = "Recurso não encontrado"),
+						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+				
 				public ResponseEntity<List<PedidoDTO_GET>> findAll() {
 					List<PedidoDTO_GET> pedido = pedidoService.findAll();
 					if(pedido.isEmpty()) {
@@ -41,6 +52,13 @@ public class PedidoController{
 				}
 
 				@GetMapping("/{id}")
+				@ApiOperation(value = "Retorna um pedido", notes = "Pedido")
+				@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna um pedido"),
+						@ApiResponse(code = 401, message = "Erro de autenticação"),
+						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+						@ApiResponse(code = 404, message = "Recurso não encontrado"),
+						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+				
 				public ResponseEntity<Optional<PedidoDTO_GET>> findById(@PathVariable Long id) {
 					Optional<PedidoDTO_GET> pedido = pedidoService.findById(id);
 					if (!pedido.isPresent()) {
@@ -50,6 +68,13 @@ public class PedidoController{
 				}
 
 				@PostMapping
+				@ApiOperation(value = "Insere os dados de um pedido", notes = "Inserir pedido")
+				@ApiResponses(value = { @ApiResponse(code = 201, message = "Pedido adicionado"),
+						@ApiResponse(code = 401, message = "Erro de autenticação"),
+						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+						@ApiResponse(code = 404, message = "Recurso não encontrado"),
+						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+				
 				public ResponseEntity<PedidoDTO_GET> PostPedido(@Valid @RequestBody PedidoDTO_POST pedidoDTO) throws EstoqueException {
 					PedidoDTO_GET pedidoTemp = pedidoService.PostPedido(pedidoDTO);
 					if (pedidoTemp == null) {
@@ -61,6 +86,13 @@ public class PedidoController{
 				}
 
 				@PutMapping("/{id}")
+				@ApiOperation(value = "Atualiza dados de um pedido", notes = "Atualizar pedido")
+				@ApiResponses(value = { @ApiResponse(code = 200, message = "Pedido atualizado"),
+						@ApiResponse(code = 401, message = "Erro de autenticação"),
+						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+						@ApiResponse(code = 404, message = "Recurso não encontrado"),
+						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+				
 				public ResponseEntity<Optional<PedidoDTO_GET>> PutPedido(@Valid @RequestBody PedidoDTO_POST pedidoDTO, @PathVariable Long id) throws EstoqueException {
 
 					Optional<PedidoDTO_GET> pedidoTemp = pedidoService.PutPedido(pedidoDTO, id);
@@ -73,6 +105,14 @@ public class PedidoController{
 				}
 
 				@DeleteMapping("/{id}")
+				@ApiOperation(value = "Remove um pedido", notes = "Remover pedido")
+				@ApiResponses(value = { @ApiResponse(code = 200, message = "Pedido removido"),
+						@ApiResponse(code = 204, message = "Sem conteúdo"),
+						@ApiResponse(code = 401, message = "Erro de autenticação"),
+						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+						@ApiResponse(code = 404, message = "Recurso não encontrado"),
+						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+				
 				public ResponseEntity<Void> delete(@PathVariable Long id) {
 					if (pedidoService.Delete(id)) {
 						return ResponseEntity.noContent().build();

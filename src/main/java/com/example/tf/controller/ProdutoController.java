@@ -22,6 +22,10 @@ import com.example.tf.DTO.ProdutoDTO;
 import com.example.tf.domain.Produto;
 import com.example.tf.service.ProdutoService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("/api/produto")
 public class ProdutoController {
@@ -30,6 +34,13 @@ public class ProdutoController {
 	ProdutoService produtoService;
 
 	@GetMapping
+	@ApiOperation(value = "Lista todos os produtos", notes = "Listagem de produtos")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna todas os produtos"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso não encontrado"),
+			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+	
 	public ResponseEntity<List<Produto>> findAll() {
 		List<Produto> produto = produtoService.findAll();
 		if(produto.isEmpty()) {
@@ -39,6 +50,13 @@ public class ProdutoController {
 	}
 
 	@GetMapping("/{id}")
+	@ApiOperation(value = "Retorna um produto", notes = "produto")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna um produto"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso não encontrado"),
+			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+	
 	public ResponseEntity<Optional<Produto>> findById(@PathVariable Long id) {
 		Optional<Produto> produto = produtoService.findById(id);
 		if (!produto.isPresent()) {
@@ -48,6 +66,13 @@ public class ProdutoController {
 	}
 
 	@PostMapping
+	@ApiOperation(value = "Insere os dados de um produto", notes = "Inserir produto")
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Produto adicionado"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso não encontrado"),
+			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+	
 	public ResponseEntity<Produto> PostProduto(@Valid @RequestBody ProdutoDTO produtoDTO) {
 		Produto produtoTemp = produtoService.PostProduto(produtoDTO);
 		if (produtoTemp == null) {
@@ -59,6 +84,13 @@ public class ProdutoController {
 	}
 
 	@PutMapping("/{id}")
+	@ApiOperation(value = "Atualiza dados de um produto", notes = "Atualizar produto")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Produto atualizado"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso não encontrado"),
+			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+	
 	public ResponseEntity<Optional<Produto>> PutProduto(@Valid @RequestBody ProdutoDTO produtoDTO, @PathVariable Long id) {
 		Optional<Produto> produtoTemp = produtoService.PutProduto(produtoDTO, id);
 		if (!produtoTemp.isPresent()) {
@@ -70,6 +102,14 @@ public class ProdutoController {
 	}
 
 	@DeleteMapping("/{id}")
+	@ApiOperation(value = "Remove um produto", notes = "Remover produto")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Produto removido"),
+			@ApiResponse(code = 204, message = "Sem conteúdo"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso não encontrado"),
+			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+	
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		if (produtoService.Delete(id)) {
 			return ResponseEntity.noContent().build();

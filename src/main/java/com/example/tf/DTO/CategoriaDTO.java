@@ -7,10 +7,18 @@ import javax.validation.constraints.Size;
 
 import com.example.tf.domain.Categoria;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class CategoriaDTO {
 	
-
+	@NotBlank
+	@Size(max = 30)
+	@ApiModelProperty(value = "Nome da categoria", required = true)
 	private String nomeCategoria;
+	
+	@NotBlank
+	@Size(max = 200)
+	@ApiModelProperty(value = "Descrição da categoria", required = true)
 	private String descricaoCategoria;
 	
 	public CategoriaDTO() {
