@@ -13,6 +13,8 @@ import javax.validation.constraints.Size;
 
 import com.example.tf.DTO.CategoriaDTO;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "categoria")
 public class Categoria {
@@ -20,16 +22,19 @@ public class Categoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name ="id_categoria", nullable = false)
+	@ApiModelProperty(value = "Identificador único da categoria")
 	private Long idCategoria;
 	
 	@NotBlank
 	@Size(max = 30)
 	@Column(name="nome_categoria", nullable = false, unique = true, length = 30)
+	@ApiModelProperty(value = "Nome da categoria", required = true)
 	private String nomeCategoria;
 
 	@NotBlank
 	@Size(max = 200)
 	@Column(name="descricao_categoria", length = 200)
+	@ApiModelProperty(value = "Descrição da categoria", required = true)
 	private String descricaoCategoria;
 
 	

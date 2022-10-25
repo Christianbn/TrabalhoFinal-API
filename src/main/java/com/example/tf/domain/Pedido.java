@@ -17,6 +17,8 @@ import javax.validation.constraints.Size;
 
 import com.example.tf.DTO.PedidoDTO_POST;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "pedido")
 public class Pedido {
@@ -24,30 +26,37 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name ="id_pedido", nullable = false)
+	@ApiModelProperty(value = "Identificador único do pedido")
 	private Long idPedido;
 	
 	@NotNull
 	@Column(name= "data_pedido", nullable = false)
+	@ApiModelProperty(value = "Data do pedido")
 	private LocalDate dataPedido;
 
 	@Column(name= "data_entrega_pedido")
+	@ApiModelProperty(value = "Data de entrega do pedido")
 	private LocalDate dataEntregaPedido;
 	
 	@Column(name= "data_envio_pedido")
+	@ApiModelProperty(value = "Data de envio do pedido")
 	private LocalDate dataEnvioPedido;
 	
 	@NotBlank
 	@Size(max = 1)
 	@Column(name="status", nullable = false, length = 2)
+	@ApiModelProperty(value = "Status do pedido")
 	private String status; 
 
 	
 	@Column(name="valor_total_pedido", nullable = false, length = 20)
+	@ApiModelProperty(value = "Valor total do pedido")
 	private Double valorTotalPedido;
 	
 	@NotNull
 	@ManyToOne()
 	@JoinColumn(name = "id_cliente")
+	@ApiModelProperty(value = "Identificador único do cliente")
 	private Cliente cliente;
 	
 	public Pedido() {

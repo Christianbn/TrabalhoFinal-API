@@ -21,6 +21,8 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import com.example.tf.DTO.ClienteDTO_POST;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "cliente")
 public class Cliente {
@@ -28,36 +30,43 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_cliente", nullable = false)
+	@ApiModelProperty(value="Identificador único do cliente")
 	private Long idCliente;
 
 	@NotBlank
 	@Size(max = 50)
 	@Column(name = "nome_completo_cliente", nullable = false, length = 50)
+	@ApiModelProperty(value="Nome completo do cliente", required = true)
 	private String nomeCompletoCliente;
 
 	@Email
 	@NotBlank
 	@Size(max = 80)
 	@Column(name = "email_cliente", nullable = false, length = 80, unique = true)
+	@ApiModelProperty(value="E-mail do cliente", required = true)
 	private String emailCliente;
 
 	@CPF
 	@NotBlank
 	@Size(max = 11)
 	@Column(name = "cpf_cliente", nullable = false, length = 11, unique = true)
+	@ApiModelProperty(value="CPF do cliente", required = true)
 	private String cpfCliente;
 
 	@NotBlank
 	@Size(max = 40)
 	@Column(name = "telefone_cliente", nullable = false, length = 40)
+	@ApiModelProperty(value="Telefone do cliente", required = true)
 	private String telefoneCliente;
 
 	@Column(name = "data_nascimento_cliente")
+	@ApiModelProperty(value="Data de nascimento do cliente")
 	private LocalDate dataNascimentoCliente;
 
 	@NotNull
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco")
+	@ApiModelProperty(value="Endereço do cliente", required = true)
 	private Endereco endereco;
 
 	

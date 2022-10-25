@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 
 import com.example.tf.DTO.ItemPedidoDTO_1;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "itempedido")
 public class ItemPedido {
@@ -22,36 +24,44 @@ public class ItemPedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name ="id_item_pedido", nullable = false)
+	@ApiModelProperty(value = "Identificador único do ItemPedido")
 	private Long idItemPedido;
 	
 	@NotNull
 	@Column(name="quantidade_item_pedido", nullable = false)
+	@ApiModelProperty(value = "Quantidade de ItemPedido")
 	private Integer quantidadeItemPedido; 
 	
 	@NotNull
 	@Column(name="preco_venda_item_pedido", nullable = false)
+	@ApiModelProperty(value = "Preço de venda do ItemPedido")
 	private Double precoVendaItemPedido; 
 	
 	@NotNull
 	@Column(name="percentual_desconto_item_pedido", nullable = false)
+	@ApiModelProperty(value = "Percentual de desconto do ItemPedido")
 	private Double percentualDescontoItemPedido; 
 	
 	@NotNull
 	@Column(name="valor_bruto_item_pedido", nullable = false)
+	@ApiModelProperty(value = "Valor bruto do ItemPedido")
 	private Double valorBrutoItemPedido; 
 	
 	@NotNull
 	@Column(name="valor_liquido_item_pedido", nullable = false)
+	@ApiModelProperty(value = "Valor líquido do ItemPedido")
 	private Double valorLiquidoItemPedido; 
 	
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "id_produto")
+	@ApiModelProperty(value = "Identificador único do produto")
 	private Produto produto;
 	
 	@NotNull
 	@ManyToOne()
 	@JoinColumn(name = "id_pedido")
+	@ApiModelProperty(value = "Identificador único do pedido")
 	private Pedido pedido;
 
 	public ItemPedido(ItemPedidoDTO_1 i, Pedido pedido, Produto produto) {

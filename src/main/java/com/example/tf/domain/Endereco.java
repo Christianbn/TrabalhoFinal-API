@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity
 @Table(name = "endereco")
@@ -19,41 +21,49 @@ public class Endereco {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name ="id_endereco", nullable = false)
+	@ApiModelProperty(value = "Identificador único do endereço")
 	private Long idEndereco;
 	
 	@NotBlank
 	@Size(max = 8)
 	@Column(name="cep_endereco", nullable = false, length = 8)
+	@ApiModelProperty(value="CEP do endereço do cliente", required = true)
 	private String cepEndereco; 
 	
 	@NotBlank
 	@Size(max = 80)
 	@Column(name="rua_endereco", nullable = false, length = 80)
+	@ApiModelProperty(value="Logradouro do cliente", required = true)
 	private String ruaEndereco;
 	
 	@NotBlank
 	@Size(max = 50)
 	@Column(name="bairro_endereco", nullable = false, length = 50)
+	@ApiModelProperty(value="Bairro do cliente", required = true)
 	private String bairroEndereco;
 	
 	@NotBlank
 	@Size(max = 80)
 	@Column(name="cidade_endereco", nullable = false, length = 80)
+	@ApiModelProperty(value="Cidade do cliente", required = true)
 	private String cidadeEndereco;
 	
 	@NotBlank
 	@Size(max = 20)
 	@Column(name="numero_endereco", nullable = false, length = 20)
+	@ApiModelProperty(value="Número do endereço do cliente", required = true)
 	private String numeroEndereco;
 	
 	@NotBlank
 	@Size(max = 200)
 	@Column(name="complemento_endereco", length = 200)
+	@ApiModelProperty(value="Complemento do endereço do cliente", required = true)
 	private String complementoEndereco;
 	
 	@NotBlank
 	@Size(max = 2)
 	@Column(name = "uf_endereco", length = 2)
+	@ApiModelProperty(value="UF do cliente", required = true)
 	private String UF;
 	
 	

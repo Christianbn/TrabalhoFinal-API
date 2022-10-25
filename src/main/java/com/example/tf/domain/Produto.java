@@ -15,8 +15,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-
 import com.example.tf.DTO.ProdutoDTO;
+
+import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "produto")
@@ -25,27 +26,33 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name ="id_produto", nullable = false)
+	@ApiModelProperty(value = "Identificador único do produto")
 	private Long idProduto;
 	
 	@NotBlank
 	@Size(max = 30)
 	@Column(name="nome_produto", nullable = false, unique = true, length = 30)
+	@ApiModelProperty(value = "Nome do produto")
 	private String nomeProduto; 
 	
 	@NotBlank
 	@Size(max = 200)
 	@Column(name="descricao_produto", length = 200)
+	@ApiModelProperty(value = "Descrição do produto")
 	private String descricaoProduto ;
 	
 	@NotNull
 	@Column(name= "quantidade_estoque_produto")
+	@ApiModelProperty(value = "Quantidade de produtos em estoque")
 	private Integer quantidadeEstoqueProduto;
 	
 	@Column(name= "data_cadastro_produto")
+	@ApiModelProperty(value = "Data de cadastro do produto")
 	private LocalDate dataCadastroProduto;
 	
 	@NotNull
 	@Column(name = "valor_unitario_produto", nullable = false) 
+	@ApiModelProperty(value = "Valor unitário do produto")
 	private Double valorUnitarioProduto;
 	
 	//imagemProduto bytea,
@@ -53,6 +60,7 @@ public class Produto {
 	@NotNull
 	@ManyToOne()
 	@JoinColumn(name = "id_categoria")
+	@ApiModelProperty(value = "Identificador único da categoria")
 	private Categoria categoria;
 	
 	
