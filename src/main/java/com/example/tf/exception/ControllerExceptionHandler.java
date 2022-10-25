@@ -85,4 +85,14 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 				LocalDateTime.now(), erros);
 		return ResponseEntity.badRequest().body(erroResposta);
 	}
+	
+	@ExceptionHandler(SenhaException.class)
+	protected ResponseEntity<Object> handleSenhaException(SenhaException ex) {
+		List<ErroCampo> erros = new ArrayList<>();
+		erros.add(new ErroCampo("senha", "Senhas não conferem."));
+
+		ErroResposta erroResposta = new ErroResposta(HttpStatus.BAD_REQUEST.value(), "Existem Campos Inválidos",
+				LocalDateTime.now(), erros);
+		return ResponseEntity.badRequest().body(erroResposta);
+	}
 }
