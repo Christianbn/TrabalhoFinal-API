@@ -10,6 +10,7 @@ import com.example.tf.domain.Cliente;
 
 @Configuration
 public class MailConfig {
+	
 	@Autowired
 	JavaMailSender javaMailSender;
 
@@ -36,6 +37,20 @@ public class MailConfig {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom("serratec.api@gmail.com");
 		message.setSubject("Cliente cadastrado com sucesso");
+		message.setText(sb.toString());
+		message.setTo(cliente.getEmailCliente());
+		javaMailSender.send(message);
+	}
+	
+	public void sendEmailRelatorio(Relatorio relatorio, Cliente cliente) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("Olá" + cliente.getNomeCompletoCliente() + ", segue em anexo o relatório do pedido solicitado \n");
+		sb.append(relatorio);
+		
+		SimpleMailMessage message = new SimpleMailMessage();
+		
+		message.setFrom("serratec.api@gmail.com");
+		message.setSubject("Relatório do pedido nº"+ relatorio.getIdPedido());
 		message.setText(sb.toString());
 		message.setTo(cliente.getEmailCliente());
 		javaMailSender.send(message);

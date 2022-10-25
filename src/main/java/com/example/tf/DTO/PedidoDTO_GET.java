@@ -3,15 +3,16 @@ package com.example.tf.DTO;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.example.tf.domain.Cliente;
 import com.example.tf.domain.Pedido;
+import com.example.tf.enums.PedidoStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -33,10 +34,12 @@ public class PedidoDTO_GET {
 	
 	@NotBlank
 	@Size(max = 1)
+	@Enumerated(EnumType.ORDINAL)
 	@ApiModelProperty(value = "Status do pedido")
-	private String status; 
+	private PedidoStatus status; 
 	
 	@NotNull
+	@JsonBackReference
 	@ApiModelProperty(value = "Identificador único do cliente")
 	private Cliente cliente;
 	
@@ -48,7 +51,7 @@ public class PedidoDTO_GET {
 	}
 
 	public PedidoDTO_GET(Long idPedido, LocalDate dataPedido, LocalDate dataEntregaPedido, LocalDate dataEnvioPedido,
-			String status, Cliente cliente, List<ItemPedidoDTO_GET> itemPedido) {
+			PedidoStatus status, Cliente cliente, List<ItemPedidoDTO_GET> itemPedido) {
 		super();
 		this.idPedido = idPedido;
 		this.dataPedido = dataPedido;
@@ -102,11 +105,11 @@ public class PedidoDTO_GET {
 		this.dataEnvioPedido = dataEnvioPedido;
 	}
 
-	public String getStatus() {
+	public PedidoStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(PedidoStatus status) {
 		this.status = status;
 	}
 

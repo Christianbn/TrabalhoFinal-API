@@ -20,6 +20,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.example.tf.DTO.ClienteDTO_POST;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -36,12 +38,14 @@ public class Cliente {
 	@NotBlank
 	@Size(max = 50)
 	@Column(name = "nome_completo_cliente", nullable = false, length = 50)
+	@JsonProperty(access = Access.READ_ONLY)
 	@ApiModelProperty(value="Nome completo do cliente", required = true)
 	private String nomeCompletoCliente;
 
 	@Email
 	@NotBlank
 	@Size(max = 80)
+	@JsonProperty(access = Access.READ_ONLY)
 	@Column(name = "email_cliente", nullable = false, length = 80, unique = true)
 	@ApiModelProperty(value="E-mail do cliente", required = true)
 	private String emailCliente;
@@ -49,23 +53,27 @@ public class Cliente {
 	@CPF
 	@NotBlank
 	@Size(max = 11)
+	@JsonProperty(access = Access.READ_ONLY)
 	@Column(name = "cpf_cliente", nullable = false, length = 11, unique = true)
 	@ApiModelProperty(value="CPF do cliente", required = true)
 	private String cpfCliente;
 
 	@NotBlank
 	@Size(max = 40)
+	@JsonProperty(access = Access.READ_ONLY)
 	@Column(name = "telefone_cliente", nullable = false, length = 40)
 	@ApiModelProperty(value="Telefone do cliente", required = true)
 	private String telefoneCliente;
 
 	@Column(name = "data_nascimento_cliente")
+	@JsonProperty(access = Access.READ_ONLY)
 	@ApiModelProperty(value="Data de nascimento do cliente")
 	private LocalDate dataNascimentoCliente;
 
 	@NotNull
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco")
+	@JsonProperty(access = Access.READ_ONLY)
 	@ApiModelProperty(value="Endereço do cliente", required = true)
 	private Endereco endereco;
 

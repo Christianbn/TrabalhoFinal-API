@@ -3,11 +3,15 @@ package com.example.tf.DTO;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+
 import com.example.tf.domain.Cliente;
+import com.example.tf.enums.PedidoStatus;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -25,30 +29,36 @@ public class PedidoDTO_POST {
 	
 	@NotBlank
 	@Size(max = 1)
+	@Enumerated(EnumType.ORDINAL)
 	@ApiModelProperty(value = "Status do pedido")
-	private String status;
+	private PedidoStatus status;
 	
 	@NotNull
 	@ApiModelProperty(value = "Identificador único do cliente")
+	
 	private Cliente cliente;
 	
 	@ApiModelProperty(value = "Adiciona os itens que contém no pedido")
-	private List<ItemPedidoDTO_1> itemPedidoDTO_1;
+	private List<ItemPedidoDTO_1> itemPedidoDTO;
 	
 	public PedidoDTO_POST() {
 		super();
 	}
 
-	public PedidoDTO_POST(LocalDate dataPedido, LocalDate dataEntregaPedido, LocalDate dataEnvioPedido, String status,
-			Cliente cliente, List<ItemPedidoDTO_1> itemPedidoDTO_1) {
+	
+	
+	public PedidoDTO_POST( LocalDate dataPedido, LocalDate dataEntregaPedido, LocalDate dataEnvioPedido,
+			 PedidoStatus status, Cliente cliente, List<ItemPedidoDTO_1> itemPedidoDTO_1) {
 		super();
 		this.dataPedido = dataPedido;
 		this.dataEntregaPedido = dataEntregaPedido;
 		this.dataEnvioPedido = dataEnvioPedido;
 		this.status = status;
 		this.cliente = cliente;
-		this.itemPedidoDTO_1 = itemPedidoDTO_1;
+		this.itemPedidoDTO = itemPedidoDTO_1;
 	}
+
+
 
 	public LocalDate getDataPedido() {
 		return dataPedido;
@@ -74,11 +84,11 @@ public class PedidoDTO_POST {
 		this.dataEnvioPedido = dataEnvioPedido;
 	}
 
-	public String getStatus() {
+	public PedidoStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(PedidoStatus status) {
 		this.status = status;
 	}
 
@@ -91,11 +101,11 @@ public class PedidoDTO_POST {
 	}
 
 	public List<ItemPedidoDTO_1> getItemPedidoDTO_1() {
-		return itemPedidoDTO_1;
+		return itemPedidoDTO;
 	}
 
 	public void setItemPedidoDTO_POST(List<ItemPedidoDTO_1> itemPedidoDTO_1) {
-		this.itemPedidoDTO_1 = itemPedidoDTO_1;
+		this.itemPedidoDTO = itemPedidoDTO_1;
 	}
 	
 }

@@ -31,121 +31,130 @@ import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/api/pedido")
-public class PedidoController{
+public class PedidoController {
 
-				@Autowired
-				PedidoService pedidoService;
-				@Autowired
-				RelatorioService relatorioService;
-				
+	@Autowired
+	PedidoService pedidoService;
+	@Autowired
+	RelatorioService relatorioService;
 
-				@GetMapping
-				@ApiOperation(value = "Lista todos os pedidos", notes = "Listagem de pedidos")
-				@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna todos os pedidos"),
-						@ApiResponse(code = 401, message = "Erro de autenticação"),
-						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
-						@ApiResponse(code = 404, message = "Recurso não encontrado"),
-						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
-				
-				public ResponseEntity<List<PedidoDTO_GET>> findAll() {
-					List<PedidoDTO_GET> pedido = pedidoService.findAll();
-					if(pedido.isEmpty()) {
-					return  ResponseEntity.notFound().build();
-					}
-					return ResponseEntity.ok(pedido);
-				
-				}
+	@GetMapping
+	@ApiOperation(value = "Lista todos os pedidos", notes = "Listagem de pedidos")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna todos os pedidos"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso não encontrado"),
+			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
 
-				@GetMapping("/{id}")
-				@ApiOperation(value = "Retorna um pedido", notes = "Pedido")
-				@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna um pedido"),
-						@ApiResponse(code = 401, message = "Erro de autenticação"),
-						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
-						@ApiResponse(code = 404, message = "Recurso não encontrado"),
-						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
-				
-				public ResponseEntity<Optional<PedidoDTO_GET>> findById(@PathVariable Long id) {
-					Optional<PedidoDTO_GET> pedido = pedidoService.findById(id);
-					if (!pedido.isPresent()) {
-						return ResponseEntity.notFound().build();
-					}
-					return ResponseEntity.ok(pedido);
-				}
+	public ResponseEntity<List<PedidoDTO_GET>> findAll() {
+		List<PedidoDTO_GET> pedido = pedidoService.findAll();
+		if (pedido.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(pedido);
 
-				@PostMapping
-				@ApiOperation(value = "Insere os dados de um pedido", notes = "Inserir pedido")
-				@ApiResponses(value = { @ApiResponse(code = 201, message = "Pedido adicionado"),
-						@ApiResponse(code = 401, message = "Erro de autenticação"),
-						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
-						@ApiResponse(code = 404, message = "Recurso não encontrado"),
-						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
-				
-				public ResponseEntity<PedidoDTO_GET> PostPedido(@Valid @RequestBody PedidoDTO_POST pedidoDTO) throws EstoqueException {
-					PedidoDTO_GET pedidoTemp = pedidoService.PostPedido(pedidoDTO);
-					if (pedidoTemp == null) {
-						return ResponseEntity.notFound().build();
-					}
-					URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(pedidoTemp.getIdPedido())
-							.toUri();
-					return ResponseEntity.created(uri).body(pedidoTemp);
-				}
+	}
 
-				@PutMapping("/{id}")
-				@ApiOperation(value = "Atualiza dados de um pedido", notes = "Atualizar pedido")
-				@ApiResponses(value = { @ApiResponse(code = 200, message = "Pedido atualizado"),
-						@ApiResponse(code = 401, message = "Erro de autenticação"),
-						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
-						@ApiResponse(code = 404, message = "Recurso não encontrado"),
-						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
-				
-				public ResponseEntity<Optional<PedidoDTO_GET>> PutPedido(@Valid @RequestBody PedidoDTO_POST pedidoDTO, @PathVariable Long id) throws EstoqueException {
+	@GetMapping("/{id}")
+	@ApiOperation(value = "Retorna um pedido", notes = "Pedido")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna um pedido"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso não encontrado"),
+			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
 
-					Optional<PedidoDTO_GET> pedidoTemp = pedidoService.PutPedido(pedidoDTO, id);
-					if (!pedidoTemp.isPresent()) {
-						return ResponseEntity.notFound().build();
-					}
+	public ResponseEntity<Optional<PedidoDTO_GET>> findById(@PathVariable Long id) {
+		Optional<PedidoDTO_GET> pedido = pedidoService.findById(id);
+		if (!pedido.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(pedido);
+	}
 
-					return ResponseEntity.ok(pedidoTemp);
+	@PostMapping
+	@ApiOperation(value = "Insere os dados de um pedido", notes = "Inserir pedido")
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Pedido adicionado"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso não encontrado"),
+			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
 
-				}
+	public ResponseEntity<PedidoDTO_GET> PostPedido(@Valid @RequestBody PedidoDTO_POST pedidoDTO)
+			throws EstoqueException {
+		PedidoDTO_GET pedidoTemp = pedidoService.PostPedido(pedidoDTO);
+		if (pedidoTemp == null) {
+			return ResponseEntity.notFound().build();
+		}
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(pedidoTemp.getIdPedido()).toUri();
+		return ResponseEntity.created(uri).body(pedidoTemp);
+	}
 
-				@DeleteMapping("/{id}")
-				@ApiOperation(value = "Remove um pedido", notes = "Remover pedido")
-				@ApiResponses(value = { @ApiResponse(code = 200, message = "Pedido removido"),
-						@ApiResponse(code = 204, message = "Sem conteúdo"),
-						@ApiResponse(code = 401, message = "Erro de autenticação"),
-						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
-						@ApiResponse(code = 404, message = "Recurso não encontrado"),
-						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
-				public ResponseEntity<Void> delete(@PathVariable Long id) {
-					if (pedidoService.Delete(id)) {
-						return ResponseEntity.noContent().build();
-					}
-					return ResponseEntity.notFound().build();
-				}
-				
-				
-				@GetMapping("/relatorio")
-			    public ResponseEntity<List<Relatorio>> listaRelatorio() {
-					List<Relatorio> relatorio = relatorioService.findAll();
-			        if (relatorio.isEmpty()) {
-			            return ResponseEntity.notFound().build();
-			        }
-			        return ResponseEntity.ok(relatorio);
+	@PutMapping("/{id}")
+	@ApiOperation(value = "Atualiza dados de um pedido", notes = "Atualizar pedido")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Pedido atualizado"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso não encontrado"),
+			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+	
+	public ResponseEntity<Optional<PedidoDTO_GET>> PutPedido(@Valid @RequestBody PedidoDTO_POST pedidoDTO,
+			@PathVariable Long id) throws EstoqueException {
 
-			    }
-				
-				@GetMapping("/relatorio/{id}")
-			    public ResponseEntity<Optional<Relatorio>> listaRelatorio(@PathVariable Long id) {
-					Optional<Relatorio> relatorio = relatorioService.findById(id);
-			        if (relatorio.isEmpty()) {
-			            return ResponseEntity.notFound().build();
-			        }
-			        return ResponseEntity.ok(relatorio);
+		Optional<PedidoDTO_GET> pedidoTemp = pedidoService.PutPedido(pedidoDTO, id);
+		if (!pedidoTemp.isPresent()) {
+			return ResponseEntity.notFound().build();
+		}
 
-			    }
-				
-				
-				
-				
+		return ResponseEntity.ok(pedidoTemp);
+
+	}
+
+	@DeleteMapping("/{id}")
+	@ApiOperation(value = "Remove um pedido", notes = "Remover pedido")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Pedido removido"),
+			@ApiResponse(code = 204, message = "Sem conteúdo"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso não encontrado"),
+			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		if (pedidoService.Delete(id)) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.notFound().build();
+	}
+
+	@GetMapping("/relatorio")
+	@ApiOperation(value = "Lista todos os relatorios", notes = "Listagem de relatorios")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna todos os relatorios"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso não encontrado"),
+			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+	public ResponseEntity<List<Relatorio>> listaRelatorio() {
+		List<Relatorio> relatorio = relatorioService.findAll();
+		if (relatorio.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(relatorio);
+
+	}
+
+	@GetMapping("/relatorio/{id}")
+	@ApiOperation(value = "Retorna um relatorio", notes = "Relatorio")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Retorna um relatorio"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso não encontrado"),
+			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+	public ResponseEntity<Optional<Relatorio>> listaRelatorio(@PathVariable Long id) {
+		Optional<Relatorio> relatorio = relatorioService.findById(id);
+		if (relatorio.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(relatorio);
+
+	}
+
 }

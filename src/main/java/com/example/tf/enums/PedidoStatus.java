@@ -14,7 +14,12 @@ public enum PedidoStatus {
         return pedidoStatusCode;
     }
 
-    public static PedidoStatus valueOf(int pedidoStatusCode) {
+
+	public void setPedidoStatusCode(int pedidoStatusCode) {
+		this.pedidoStatusCode = pedidoStatusCode;
+	}
+
+	public static PedidoStatus valueOf(int pedidoStatusCode) {
         for (PedidoStatus value : PedidoStatus.values()) {
             if (value.getPedidoStatusCode() == pedidoStatusCode) {
                 return value;

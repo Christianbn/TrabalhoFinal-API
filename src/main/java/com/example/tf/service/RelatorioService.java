@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.tf.DTO.Relatorio;
+import com.example.tf.config.MailConfig;
 import com.example.tf.domain.ItemPedido;
 import com.example.tf.domain.Pedido;
 import com.example.tf.repository.ItemPedidoRepository;
@@ -19,6 +20,8 @@ public class RelatorioService {
     PedidoRepository pedidoRepository;
     @Autowired
     ItemPedidoRepository itemPedidoRepository;
+    @Autowired
+	MailConfig mailConfig;
     
     
     
@@ -30,7 +33,8 @@ public class RelatorioService {
             List<ItemPedido> itensPedido = itemPedidoRepository.findByPedido(pedidoTemp);
             relatorio.add(new Relatorio(pedidoTemp, itensPedido));
         }
-
+        
+        
         return relatorio;
     }
     
@@ -39,6 +43,7 @@ public class RelatorioService {
         if (pedido.isPresent()) {
             List<ItemPedido> itensPedido = itemPedidoRepository.findByPedido(pedido.get());
             Relatorio relatorio = new Relatorio(pedido.get(), itensPedido);
+            mailConfig.sendEmailRelatorio(relatorio, pedido.get().getCliente());
             return Optional.of(relatorio);
         }
         return null;

@@ -29,6 +29,4 @@ public class PedidoStatusConverter implements AttributeConverter<PedidoStatus, I
 	        }
 	        throw new IllegalArgumentException();
 	    }
-
-
 	}
