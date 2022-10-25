@@ -18,10 +18,10 @@ public class SwaggerConfig {
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("br.org.serratec"))
+				.apis(RequestHandlerSelectors.basePackage("com.example.tf"))
 				.paths(PathSelectors.any())
-				.build();
-				//.apiInfo(apiInfo());
+				.build()
+				.apiInfo(apiInfo());
 	}
    private ApiInfo apiInfo(){
        ApiInfo apiInfo = new ApiInfoBuilder()
@@ -30,7 +30,7 @@ public class SwaggerConfig {
            .license("Apache License Version 2.0")
            .licenseUrl("https://www.apache.org/license/LICENSE-2.0")
            .version("1.0.0")
-           .contact(new Contact("Serratec","https://www.serrtatec.org.br", "teste@gmail.com"))
+           .contact(new Contact("Serratec","https://www.serrtatec.org.br", "serratec.api@gmail.com"))
            .build();
        return apiInfo;
    }

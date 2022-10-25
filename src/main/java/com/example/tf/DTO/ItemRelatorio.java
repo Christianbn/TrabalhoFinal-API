@@ -4,6 +4,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.example.tf.domain.ItemPedido;
+
 import io.swagger.annotations.ApiModelProperty;
 
 public class ItemRelatorio {
@@ -41,17 +43,15 @@ public class ItemRelatorio {
 		super();
 	}
 
-	public ItemRelatorio(Long idProduto, String nomeProduto, Integer quantidadeItemPedido, Double precoVendaItemPedido,
-			Double valorBrutoItemPedido, Double percentualDescontoItemPedido, Double valorLiquidoItemPedido) {
-		super();
-		this.idProduto = idProduto;
-		this.nomeProduto = nomeProduto;
-		this.quantidadeItemPedido = quantidadeItemPedido;
-		this.precoVendaItemPedido = precoVendaItemPedido;
-		this.valorBrutoItemPedido = valorBrutoItemPedido;
-		this.percentualDescontoItemPedido = percentualDescontoItemPedido;
-		this.valorLiquidoItemPedido = valorLiquidoItemPedido;
-	}
+	public ItemRelatorio(ItemPedido itens) {
+        this.idProduto = itens.getProduto().getIdProduto();
+        this.nomeProduto = itens.getProduto().getNomeProduto();
+        this.quantidadeItemPedido = itens.getQuantidadeItemPedido();
+        this.precoVendaItemPedido = itens.getPrecoVendaItemPedido();
+        this.valorBrutoItemPedido = itens.getValorBrutoItemPedido();
+        this.percentualDescontoItemPedido = itens.getPercentualDescontoItemPedido();
+        this.valorLiquidoItemPedido = itens.getValorLiquidoItemPedido();
+    }
 
 	public Long getIdProduto() {
 		return idProduto;

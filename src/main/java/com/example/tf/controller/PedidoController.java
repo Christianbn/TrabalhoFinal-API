@@ -20,8 +20,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.tf.DTO.PedidoDTO_GET;
 import com.example.tf.DTO.PedidoDTO_POST;
+import com.example.tf.DTO.Relatorio;
 import com.example.tf.exception.EstoqueException;
 import com.example.tf.service.PedidoService;
+import com.example.tf.service.RelatorioService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -33,6 +35,9 @@ public class PedidoController{
 
 				@Autowired
 				PedidoService pedidoService;
+				@Autowired
+				RelatorioService relatorioService;
+				
 
 				@GetMapping
 				@ApiOperation(value = "Lista todos os pedidos", notes = "Listagem de pedidos")
@@ -112,11 +117,35 @@ public class PedidoController{
 						@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
 						@ApiResponse(code = 404, message = "Recurso não encontrado"),
 						@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
-				
 				public ResponseEntity<Void> delete(@PathVariable Long id) {
 					if (pedidoService.Delete(id)) {
 						return ResponseEntity.noContent().build();
 					}
 					return ResponseEntity.notFound().build();
 				}
+				
+				
+				@GetMapping("/relatorio")
+			    public ResponseEntity<List<Relatorio>> listaRelatorio() {
+					List<Relatorio> relatorio = relatorioService.findAll();
+			        if (relatorio.isEmpty()) {
+			            return ResponseEntity.notFound().build();
+			        }
+			        return ResponseEntity.ok(relatorio);
+
+			    }
+				
+				@GetMapping("/relatorio/{id}")
+			    public ResponseEntity<Optional<Relatorio>> listaRelatorio(@PathVariable Long id) {
+					Optional<Relatorio> relatorio = relatorioService.findById(id);
+			        if (relatorio.isEmpty()) {
+			            return ResponseEntity.notFound().build();
+			        }
+			        return ResponseEntity.ok(relatorio);
+
+			    }
+				
+				
+				
+				
 }

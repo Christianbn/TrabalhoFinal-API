@@ -1,9 +1,13 @@
 package com.example.tf.DTO;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
+
+import com.example.tf.domain.ItemPedido;
+import com.example.tf.domain.Pedido;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -26,14 +30,15 @@ public class Relatorio {
 		super();
 	}
 
-	public Relatorio(Long idPedido, LocalDate dataPedido, Double valorTotalPedido,
-			List<ItemRelatorio> itemRelatorio) {
-		super();
-		this.idPedido = idPedido;
-		this.dataPedido = dataPedido;
-		this.valorTotalPedido = valorTotalPedido;
-		this.itemRelatorio = itemRelatorio;
-	}
+	public Relatorio(Pedido pedido, List<ItemPedido> itemPedido) {
+        this.idPedido = pedido.getIdPedido();
+        this.dataPedido = pedido.getDataPedido();
+        this.valorTotalPedido = pedido.getValorTotalPedido();
+        this.itemRelatorio = new ArrayList<>();
+        for (ItemPedido itens : itemPedido) {
+            this.itemRelatorio.add(new ItemRelatorio(itens));
+        }
+    }
 
 	public Long getIdPedido() {
 		return idPedido;
