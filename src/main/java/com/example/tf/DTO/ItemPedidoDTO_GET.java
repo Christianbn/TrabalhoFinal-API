@@ -1,18 +1,43 @@
 package com.example.tf.DTO;
 
+
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
+
 import com.example.tf.domain.ItemPedido;
 import com.example.tf.domain.Produto;
+
+import io.swagger.annotations.ApiModelProperty;
 
 public class ItemPedidoDTO_GET {
 
 	
-
+	@ApiModelProperty(value = "Identificador único do ItemPedido")
 	private Long idItemPedido;
-	private Integer quantidadeItemPedido; 
+	
+	@NotNull
+	@ApiModelProperty(value = "Quantidade de ItemPedido")
+	private Integer quantidadeItemPedido;
+	
+	@NotNull
+	@ApiModelProperty(value = "Preço de venda do ItemPedido")
 	private Double precoVendaItemPedido; 
+	
+	@NotNull
+	@ApiModelProperty(value = "Percentual de desconto do ItemPedido")
 	private Double percentualDescontoItemPedido; 
+	
+	@NotNull
+	@ApiModelProperty(value = "Valor bruto do ItemPedido")
 	private Double valorBrutoItemPedido; 
+	
+	@NotNull
+	@ApiModelProperty(value = "Valor líquido do ItemPedido")
 	private Double valorLiquidoItemPedido; 
+	
+	@NotNull
+	@ManyToOne
+	@ApiModelProperty(value = "Identificador único do produto")
 	private Produto produto;
 	
 	

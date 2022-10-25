@@ -1,14 +1,35 @@
 package com.example.tf.DTO;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.example.tf.domain.Categoria;
+
+import io.swagger.annotations.ApiModelProperty;
 
 public class ProdutoDTO {
 
-	
+	@NotBlank
+	@Size(max = 30)
+	@ApiModelProperty(value = "Nome do produto")
 	private String nomeProduto; 
+	
+	@NotBlank
+	@Size(max = 200)
+	@ApiModelProperty(value = "Descrição do produto")
 	private String descricaoProduto ;
+	
+	@NotNull
+	@ApiModelProperty(value = "Quantidade de produtos em estoque")
 	private Integer quantidadeEstoqueProduto;
+	
+	@NotNull
+	@ApiModelProperty(value = "Valor unitário do produto")
 	private Double valorUnitarioProduto;
+	
+	@NotNull
+	@ApiModelProperty(value = "Identificador único da categoria")
 	private Categoria categoria;
 	
 	public ProdutoDTO() {

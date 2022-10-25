@@ -1,13 +1,40 @@
 package com.example.tf.DTO;
 
-public class ItemRelatorio {
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+import io.swagger.annotations.ApiModelProperty;
+
+public class ItemRelatorio {
+	
+
+	@ApiModelProperty(value = "Identificador único do ItemPedido")
 	private Long idProduto;
+	
+	@NotBlank
+	@Size(max = 30)
+	@ApiModelProperty(value = "Nome do produto")
 	private String nomeProduto;
+	
+	@NotNull
+	@ApiModelProperty(value = "Quantidade de ItemPedido")
 	private Integer quantidadeItemPedido;
+	
+	@NotNull
+	@ApiModelProperty(value = "Preço de venda do ItemPedido")
 	private Double precoVendaItemPedido;
+	
+	@NotNull
+	@ApiModelProperty(value = "Valor bruto do ItemPedido")
 	private Double valorBrutoItemPedido; 
+	
+	@NotNull
+	@ApiModelProperty(value = "Percentual de desconto do ItemPedido")
 	private Double percentualDescontoItemPedido; 
+	
+	@NotNull
+	@ApiModelProperty(value = "Valor líquido do ItemPedido")
 	private Double valorLiquidoItemPedido;
 	
 	public ItemRelatorio() {

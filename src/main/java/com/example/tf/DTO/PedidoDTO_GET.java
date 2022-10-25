@@ -3,19 +3,44 @@ package com.example.tf.DTO;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import com.example.tf.domain.Cliente;
 import com.example.tf.domain.Pedido;
+
+import io.swagger.annotations.ApiModelProperty;
 
 public class PedidoDTO_GET {
 	
 	
-
+	@ApiModelProperty(value = "Identificador único do pedido")
 	private Long idPedido;
+	
+	@NotNull
+	@ApiModelProperty(value = "Data do pedido")
 	private LocalDate dataPedido;
+	
+	@ApiModelProperty(value = "Data de entrega do pedido")
 	private LocalDate dataEntregaPedido;
+	
+	@ApiModelProperty(value = "Data de envio do pedido")
 	private LocalDate dataEnvioPedido;
+	
+	@NotBlank
+	@Size(max = 1)
+	@ApiModelProperty(value = "Status do pedido")
 	private String status; 
+	
+	@NotNull
+	@ApiModelProperty(value = "Identificador único do cliente")
 	private Cliente cliente;
+	
+	@ApiModelProperty(value = "Lista de itens que contém no pedido")
 	private List<ItemPedidoDTO_GET> itemPedido;
 	
 	public PedidoDTO_GET() {

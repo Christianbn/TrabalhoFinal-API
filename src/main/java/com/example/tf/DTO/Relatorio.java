@@ -3,11 +3,23 @@ package com.example.tf.DTO;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Relatorio {
+import javax.validation.constraints.NotNull;
 
+import io.swagger.annotations.ApiModelProperty;
+
+public class Relatorio {
+	
+	@ApiModelProperty(value = "Identificador único do pedido")
 	private Long idPedido;
+	
+	@NotNull
+	@ApiModelProperty(value = "Data do pedido")
 	private LocalDate dataPedido;
+	
+	@ApiModelProperty(value = "Valor total do pedido")
 	private Double valorTotalPedido;
+	
+	@ApiModelProperty(value = "Relatório")
 	private List<ItemRelatorio> itemRelatorio;
 	
 	public Relatorio() {
