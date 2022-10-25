@@ -25,8 +25,8 @@ public class SwaggerConfig {
 	}
    private ApiInfo apiInfo(){
        ApiInfo apiInfo = new ApiInfoBuilder()
-           .title("Gestão de bibliotecas")
-           .description("Essa é uma API desenvolvida para gestão de bibliotecas")
+           .title("Gestão de E-Commerce")
+           .description("Essa é uma API desenvolvida para gestão de E-Commerce")
            .license("Apache License Version 2.0")
            .licenseUrl("https://www.apache.org/license/LICENSE-2.0")
            .version("1.0.0")
