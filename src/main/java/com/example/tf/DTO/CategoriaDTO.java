@@ -11,12 +11,12 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class CategoriaDTO {
 	
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 30)
 	@ApiModelProperty(value = "Nome da categoria", required = true)
 	private String nomeCategoria;
 	
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 200)
 	@ApiModelProperty(value = "Descrição da categoria", required = true)
 	private String descricaoCategoria;
@@ -26,8 +26,7 @@ public class CategoriaDTO {
 	}
 
 	
-	public CategoriaDTO(@NotBlank @Size(max = 30) String nomeCategoria,
-			@NotBlank @Size(max = 200) String descricaoCategoria) {
+	public CategoriaDTO(String nomeCategoria,String descricaoCategoria) {
 		super();
 		this.nomeCategoria = nomeCategoria;
 		this.descricaoCategoria = descricaoCategoria;

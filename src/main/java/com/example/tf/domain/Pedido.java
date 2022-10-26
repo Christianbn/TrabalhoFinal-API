@@ -28,7 +28,7 @@ public class Pedido {
 	@ApiModelProperty(value = "Identificador único do pedido")
 	private Long idPedido;
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@Column(name= "data_pedido", nullable = false)
 	@ApiModelProperty(value = "Data do pedido")
 	private LocalDate dataPedido;
@@ -50,7 +50,7 @@ public class Pedido {
 	@ApiModelProperty(value = "Valor total do pedido")
 	private Double valorTotalPedido;
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ManyToOne()
 	@JoinColumn(name = "id_cliente")
 	@ApiModelProperty(value = "Identificador único do cliente")

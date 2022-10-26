@@ -14,28 +14,28 @@ public class ItemRelatorio {
 	@ApiModelProperty(value = "Identificador único do ItemPedido")
 	private Long idProduto;
 	
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 30)
 	@ApiModelProperty(value = "Nome do produto")
 	private String nomeProduto;
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Quantidade de ItemPedido")
 	private Integer quantidadeItemPedido;
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Preço de venda do ItemPedido")
 	private Double precoVendaItemPedido;
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Valor bruto do ItemPedido")
 	private Double valorBrutoItemPedido; 
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Percentual de desconto do ItemPedido")
 	private Double percentualDescontoItemPedido; 
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Valor líquido do ItemPedido")
 	private Double valorLiquidoItemPedido;
 	

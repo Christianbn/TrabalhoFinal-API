@@ -20,45 +20,44 @@ import io.swagger.annotations.ApiModelProperty;
 @Table(name = "itempedido")
 public class ItemPedido {
 
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name ="id_item_pedido", nullable = false)
+	@Column(name = "id_item_pedido", nullable = false)
 	@ApiModelProperty(value = "Identificador único do ItemPedido")
 	private Long idItemPedido;
-	
-	@NotNull
-	@Column(name="quantidade_item_pedido", nullable = false)
+
+	@NotNull(message = "Este campo não pode ser nulo.")
+	@Column(name = "quantidade_item_pedido", nullable = false)
 	@ApiModelProperty(value = "Quantidade de ItemPedido")
-	private Integer quantidadeItemPedido; 
-	
-	@NotNull
-	@Column(name="preco_venda_item_pedido", nullable = false)
+	private Integer quantidadeItemPedido;
+
+	@NotNull(message = "Este campo não pode ser nulo.")
+	@Column(name = "preco_venda_item_pedido", nullable = false)
 	@ApiModelProperty(value = "Preço de venda do ItemPedido")
-	private Double precoVendaItemPedido; 
-	
-	@NotNull
-	@Column(name="percentual_desconto_item_pedido", nullable = false)
+	private Double precoVendaItemPedido;
+
+	@NotNull(message = "Este campo não pode ser nulo.")
+	@Column(name = "percentual_desconto_item_pedido", nullable = false)
 	@ApiModelProperty(value = "Percentual de desconto do ItemPedido")
-	private Double percentualDescontoItemPedido; 
-	
-	@NotNull
-	@Column(name="valor_bruto_item_pedido", nullable = false)
+	private Double percentualDescontoItemPedido;
+
+	@NotNull(message = "Este campo não pode ser nulo.")
+	@Column(name = "valor_bruto_item_pedido", nullable = false)
 	@ApiModelProperty(value = "Valor bruto do ItemPedido")
-	private Double valorBrutoItemPedido; 
-	
-	@NotNull
-	@Column(name="valor_liquido_item_pedido", nullable = false)
+	private Double valorBrutoItemPedido;
+
+	@NotNull(message = "Este campo não pode ser nulo.")
+	@Column(name = "valor_liquido_item_pedido", nullable = false)
 	@ApiModelProperty(value = "Valor líquido do ItemPedido")
-	private Double valorLiquidoItemPedido; 
-	
-	@NotNull
+	private Double valorLiquidoItemPedido;
+
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ManyToOne
 	@JoinColumn(name = "id_produto")
 	@ApiModelProperty(value = "Identificador único do produto")
 	private Produto produto;
-	
-	@NotNull
+
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ManyToOne()
 	@JoinColumn(name = "id_pedido")
 	@ApiModelProperty(value = "Identificador único do pedido")
@@ -70,22 +69,25 @@ public class ItemPedido {
 		this.percentualDescontoItemPedido = i.getPercentualDescontoItemPedido();
 		this.precoVendaItemPedido = produto.getValorUnitarioProduto();
 		this.valorBrutoItemPedido = (produto.getValorUnitarioProduto() * quantidadeItemPedido);
-		this.valorLiquidoItemPedido = (valorBrutoItemPedido - (valorBrutoItemPedido * (percentualDescontoItemPedido/100)));
+		this.valorLiquidoItemPedido = (valorBrutoItemPedido
+				- (valorBrutoItemPedido * (percentualDescontoItemPedido / 100)));
 		this.pedido = pedido;
 	}
+
 	public ItemPedido(ItemPedidoDTO_1 i, Pedido pedido, Produto produto, Long id) {
 		this.produto = produto;
 		this.quantidadeItemPedido = i.getQuantidadeItemPedido();
 		this.percentualDescontoItemPedido = i.getPercentualDescontoItemPedido();
 		this.precoVendaItemPedido = produto.getValorUnitarioProduto();
 		this.valorBrutoItemPedido = (produto.getValorUnitarioProduto() * quantidadeItemPedido);
-		this.valorLiquidoItemPedido = (valorBrutoItemPedido - (valorBrutoItemPedido * (percentualDescontoItemPedido/100)));
+		this.valorLiquidoItemPedido = (valorBrutoItemPedido
+				- (valorBrutoItemPedido * (percentualDescontoItemPedido / 100)));
 		this.pedido = pedido;
 		this.idItemPedido = id;
 	}
-	
+
 	public ItemPedido() {
-		
+
 	}
 
 	public Long getIdItemPedido() {
@@ -168,7 +170,5 @@ public class ItemPedido {
 		ItemPedido other = (ItemPedido) obj;
 		return Objects.equals(idItemPedido, other.idItemPedido);
 	}
-	
-	
-	
+
 }

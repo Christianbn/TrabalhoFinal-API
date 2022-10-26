@@ -1,6 +1,5 @@
 package com.example.tf.DTO;
 
-
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -11,37 +10,34 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class ItemPedidoDTO_GET {
 
-	
 	@ApiModelProperty(value = "Identificador único do ItemPedido")
 	private Long idItemPedido;
-	
-	@NotNull
+
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Quantidade de ItemPedido")
 	private Integer quantidadeItemPedido;
-	
-	@NotNull
+
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Preço de venda do ItemPedido")
-	private Double precoVendaItemPedido; 
-	
-	@NotNull
+	private Double precoVendaItemPedido;
+
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Percentual de desconto do ItemPedido")
-	private Double percentualDescontoItemPedido; 
-	
-	@NotNull
+	private Double percentualDescontoItemPedido;
+
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Valor bruto do ItemPedido")
-	private Double valorBrutoItemPedido; 
-	
-	@NotNull
+	private Double valorBrutoItemPedido;
+
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Valor líquido do ItemPedido")
-	private Double valorLiquidoItemPedido; 
-	
-	@NotNull
+	private Double valorLiquidoItemPedido;
+
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ManyToOne
 	@ApiModelProperty(value = "Identificador único do produto")
 	private Produto produto;
-	
-	
-	
+
 	public ItemPedidoDTO_GET(Long idItemPedido, Integer quantidadeItemPedido, Double precoVendaItemPedido,
 			Double percentualDescontoItemPedido, Double valorBrutoItemPedido, Double valorLiquidoItemPedido,
 			Produto produto) {
@@ -54,7 +50,7 @@ public class ItemPedidoDTO_GET {
 		this.valorLiquidoItemPedido = valorLiquidoItemPedido;
 		this.produto = produto;
 	}
-	
+
 	public ItemPedidoDTO_GET(ItemPedido itemPedido) {
 		this.idItemPedido = itemPedido.getIdItemPedido();
 		this.quantidadeItemPedido = itemPedido.getQuantidadeItemPedido();
@@ -64,49 +60,63 @@ public class ItemPedidoDTO_GET {
 		this.valorLiquidoItemPedido = itemPedido.getValorLiquidoItemPedido();
 		this.produto = itemPedido.getProduto();
 	}
-	
+
 	public ItemPedidoDTO_GET() {
 		super();
 	}
+
 	public Long getIdItemPedido() {
 		return idItemPedido;
 	}
+
 	public void setIdItemPedido(Long idItemPedido) {
 		this.idItemPedido = idItemPedido;
 	}
+
 	public Integer getQuantidadeItemPedido() {
 		return quantidadeItemPedido;
 	}
+
 	public void setQuantidadeItemPedido(Integer quantidadeItemPedido) {
 		this.quantidadeItemPedido = quantidadeItemPedido;
 	}
+
 	public Double getPrecoVendaItemPedido() {
 		return precoVendaItemPedido;
 	}
+
 	public void setPrecoVendaItemPedido(Double precoVendaItemPedido) {
 		this.precoVendaItemPedido = precoVendaItemPedido;
 	}
+
 	public Double getPercentualDescontoItemPedido() {
 		return percentualDescontoItemPedido;
 	}
+
 	public void setPercentualDescontoItemPedido(Double percentualDescontoItemPedido) {
 		this.percentualDescontoItemPedido = percentualDescontoItemPedido;
 	}
+
 	public Double getValorBrutoItemPedido() {
 		return valorBrutoItemPedido;
 	}
+
 	public void setValorBrutoItemPedido(Double valorBrutoItemPedido) {
 		this.valorBrutoItemPedido = valorBrutoItemPedido;
 	}
+
 	public Double getValorLiquidoItemPedido() {
 		return valorLiquidoItemPedido;
 	}
+
 	public void setValorLiquidoItemPedido(Double valorLiquidoItemPedido) {
 		this.valorLiquidoItemPedido = valorLiquidoItemPedido;
 	}
+
 	public Produto getProduto() {
 		return produto;
 	}
+
 	public void setProduto(Produto produto) {
 		this.produto = produto;
 	}

@@ -18,27 +18,25 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity
 @Table(name = "categoria")
 public class Categoria {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name ="id_categoria", nullable = false)
+	@Column(name = "id_categoria", nullable = false)
 	@ApiModelProperty(value = "Identificador único da categoria")
 	private Long idCategoria;
-	
-	@NotBlank
+
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 30)
-	@Column(name="nome_categoria", nullable = false, unique = true, length = 30)
+	@Column(name = "nome_categoria", nullable = false, unique = true, length = 30)
 	@ApiModelProperty(value = "Nome da categoria", required = true)
 	private String nomeCategoria;
 
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 200)
-	@Column(name="descricao_categoria", length = 200)
+	@Column(name = "descricao_categoria", length = 200)
 	@ApiModelProperty(value = "Descrição da categoria", required = true)
 	private String descricaoCategoria;
 
-	
-	
 	public Categoria() {
 		super();
 	}
@@ -89,6 +87,4 @@ public class Categoria {
 		this.descricaoCategoria = descricaoCategoria;
 	}
 
-		
-	
 }

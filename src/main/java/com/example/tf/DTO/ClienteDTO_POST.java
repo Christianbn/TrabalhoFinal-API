@@ -13,24 +13,24 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class ClienteDTO_POST {
 	
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 50)
 	@ApiModelProperty(value="Nome completo do cliente", required = true)
 	private String nomeCompletoCliente; 
 	
 	@Email
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 80)
 	@ApiModelProperty(value="E-mail do cliente", required = true)
 	private String emailCliente;
 	
 	@CPF
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 11)
 	@ApiModelProperty(value="CPF do cliente", required = true)
 	private String cpfCliente; 
 	
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 40)
 	@ApiModelProperty(value="Telefone do cliente", required = true)
 	private String telefoneCliente;
@@ -38,17 +38,17 @@ public class ClienteDTO_POST {
 	@ApiModelProperty(value="Data de nascimento do cliente")
 	private LocalDate dataNascimentoCliente;
 	
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 8)
 	@ApiModelProperty(value="CEP do endereço do cliente", required = true)
 	private String cepEndereco; 
 	
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 20)
 	@ApiModelProperty(value="Número do endereço do cliente", required = true)
 	private String numeroEndereco;
 	
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 200)
 	@ApiModelProperty(value="Complemento do endereço do cliente", required = true)
 	private String complementoEndereco;

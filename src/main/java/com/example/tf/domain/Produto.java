@@ -24,53 +24,50 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity
 @Table(name = "produto")
 public class Produto {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name ="id_produto", nullable = false)
+	@Column(name = "id_produto", nullable = false)
 	@ApiModelProperty(value = "Identificador único do produto")
 	private Long idProduto;
-	
-	@NotBlank
+
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 30)
-	@Column(name="nome_produto", nullable = false, unique = true, length = 30)
+	@Column(name = "nome_produto", nullable = false, unique = true, length = 30)
 	@ApiModelProperty(value = "Nome do produto")
-	private String nomeProduto; 
-	
-	@NotBlank
+	private String nomeProduto;
+
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 200)
-	@Column(name="descricao_produto", length = 200)
+	@Column(name = "descricao_produto", length = 200)
 	@ApiModelProperty(value = "Descrição do produto")
-	private String descricaoProduto ;
-	
-	@NotNull
-	@Column(name= "quantidade_estoque_produto")
+	private String descricaoProduto;
+
+	@NotNull(message = "Este campo não pode ser nulo.")
+	@Column(name = "quantidade_estoque_produto")
 	@ApiModelProperty(value = "Quantidade de produtos em estoque")
 	private Integer quantidadeEstoqueProduto;
-	
-	@Column(name= "data_cadastro_produto")
+
+	@Column(name = "data_cadastro_produto")
 	@ApiModelProperty(value = "Data de cadastro do produto")
 	private LocalDate dataCadastroProduto;
-	
-	@NotNull
-	@Column(name = "valor_unitario_produto", nullable = false) 
+
+	@NotNull(message = "Este campo não pode ser nulo.")
+	@Column(name = "valor_unitario_produto", nullable = false)
 	@ApiModelProperty(value = "Valor unitário do produto")
 	private Double valorUnitarioProduto;
-	
-	
-	@NotNull
+
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ManyToOne()
 	@JoinColumn(name = "id_categoria")
 	@JsonProperty(access = Access.READ_ONLY)
 	@ApiModelProperty(value = "Identificador único da categoria")
 	private Categoria categoria;
-	
-	
-	
+
 	public Produto() {
 		super();
 	}
-	
+
 	public Produto(ProdutoDTO produtoDTO) {
 		this.nomeProduto = produtoDTO.getNomeProduto();
 		this.descricaoProduto = produtoDTO.getDescricaoProduto();
@@ -78,8 +75,9 @@ public class Produto {
 		this.valorUnitarioProduto = produtoDTO.getValorUnitarioProduto();
 		this.categoria = produtoDTO.getCategoria();
 		this.dataCadastroProduto = LocalDate.now();
-	
+
 	}
+
 	public Produto(ProdutoDTO produtoDTO, Long id) {
 		this.nomeProduto = produtoDTO.getNomeProduto();
 		this.descricaoProduto = produtoDTO.getDescricaoProduto();
@@ -87,11 +85,9 @@ public class Produto {
 		this.valorUnitarioProduto = produtoDTO.getValorUnitarioProduto();
 		this.categoria = produtoDTO.getCategoria();
 		this.dataCadastroProduto = LocalDate.now();
-		this.idProduto  = id;
-	
+		this.idProduto = id;
+
 	}
-	
-	
 
 	public Long getIdProduto() {
 		return idProduto;
@@ -166,5 +162,4 @@ public class Produto {
 		return Objects.equals(idProduto, other.idProduto);
 	}
 
-	
 }

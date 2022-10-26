@@ -7,43 +7,40 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 
-
 import com.example.tf.domain.Cliente;
 import com.example.tf.enums.PedidoStatus;
 
 import io.swagger.annotations.ApiModelProperty;
 
 public class PedidoDTO_POST {
-	
-	@NotNull
+
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Data do pedido")
 	private LocalDate dataPedido;
-	
+
 	@ApiModelProperty(value = "Data de entrega do pedido")
 	private LocalDate dataEntregaPedido;
-	
+
 	@ApiModelProperty(value = "Data de envio do pedido")
 	private LocalDate dataEnvioPedido;
-	
+
 	@Enumerated(EnumType.ORDINAL)
 	@ApiModelProperty(value = "Status do pedido")
 	private PedidoStatus status;
-	
-	@NotNull
+
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Identificador único do cliente")
 	private Cliente cliente;
-	
+
 	@ApiModelProperty(value = "Adiciona os itens que contém no pedido")
 	private List<ItemPedidoDTO_1> itemPedidoDTO;
-	
+
 	public PedidoDTO_POST() {
 		super();
 	}
 
-	
-	
-	public PedidoDTO_POST( LocalDate dataPedido, LocalDate dataEntregaPedido, LocalDate dataEnvioPedido,
-			 PedidoStatus status, Cliente cliente, List<ItemPedidoDTO_1> itemPedidoDTO_1) {
+	public PedidoDTO_POST(LocalDate dataPedido, LocalDate dataEntregaPedido, LocalDate dataEnvioPedido,
+			PedidoStatus status, Cliente cliente, List<ItemPedidoDTO_1> itemPedidoDTO_1) {
 		super();
 		this.dataPedido = dataPedido;
 		this.dataEntregaPedido = dataEntregaPedido;
@@ -52,8 +49,6 @@ public class PedidoDTO_POST {
 		this.cliente = cliente;
 		this.itemPedidoDTO = itemPedidoDTO_1;
 	}
-
-
 
 	public LocalDate getDataPedido() {
 		return dataPedido;
@@ -102,5 +97,5 @@ public class PedidoDTO_POST {
 	public void setItemPedidoDTO_POST(List<ItemPedidoDTO_1> itemPedidoDTO_1) {
 		this.itemPedidoDTO = itemPedidoDTO_1;
 	}
-	
+
 }

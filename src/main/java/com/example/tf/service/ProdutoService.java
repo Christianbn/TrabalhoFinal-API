@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.tf.DTO.ProdutoDTO;
 import com.example.tf.domain.Produto;
+import com.example.tf.exception.DescricaoException;
 import com.example.tf.repository.ProdutoRepository;
 
 @Service
@@ -37,10 +38,10 @@ public class ProdutoService {
 	}
 
 	@Transactional
-	public Produto PostProduto(ProdutoDTO produtoDTO, MultipartFile file) throws IOException {
+	public Produto PostProduto(ProdutoDTO produtoDTO, MultipartFile file) throws IOException, DescricaoException {
 		Optional<Produto> produtoTemp = produtoRepository.findByNomeProduto(produtoDTO.getNomeProduto());
 		if (produtoTemp.isPresent()) {
-			return null;
+			throw new DescricaoException();
 		}
 		Produto produto = new Produto(produtoDTO);
 		produtoRepository.save(produto);
@@ -48,14 +49,14 @@ public class ProdutoService {
 		return produto;
 	}
 
-	public Optional<Produto> PutProduto(ProdutoDTO produtoDTO, Long id) {
+	public Optional<Produto> PutProduto(ProdutoDTO produtoDTO, Long id) throws DescricaoException {
 		Optional<Produto> produtoTemp = produtoRepository.findById(id);
 		if (produtoTemp.isPresent()) {
 			Produto produto = new Produto(produtoDTO, produtoTemp.get().getIdProduto());
 			produto = produtoRepository.save(produto);
 			return Optional.of(produto);
 		}
-		return null;
+		throw new DescricaoException();
 	}
 
 	public Boolean Delete(Long id) {

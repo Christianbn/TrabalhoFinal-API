@@ -19,7 +19,7 @@ public class PedidoDTO_GET {
 	@ApiModelProperty(value = "Identificador único do pedido")
 	private Long idPedido;
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Data do pedido")
 	private LocalDate dataPedido;
 	
@@ -33,7 +33,7 @@ public class PedidoDTO_GET {
 	@ApiModelProperty(value = "Status do pedido")
 	private PedidoStatus status; 
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Identificador único do cliente")
 	private Cliente cliente;
 	

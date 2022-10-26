@@ -13,60 +13,57 @@ import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModelProperty;
 
-
 @Entity
 @Table(name = "endereco")
 public class Endereco {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name ="id_endereco", nullable = false)
+	@Column(name = "id_endereco", nullable = false)
 	@ApiModelProperty(value = "Identificador único do endereço")
 	private Long idEndereco;
-	
-	@NotBlank
+
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 8)
-	@Column(name="cep_endereco", nullable = false, length = 8)
-	@ApiModelProperty(value="CEP do endereço do cliente", required = true)
-	private String cepEndereco; 
-	
-	@NotBlank
+	@Column(name = "cep_endereco", nullable = false, length = 8)
+	@ApiModelProperty(value = "CEP do endereço do cliente", required = true)
+	private String cepEndereco;
+
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 80)
-	@Column(name="rua_endereco", nullable = false, length = 80)
-	@ApiModelProperty(value="Logradouro do cliente", required = true)
+	@Column(name = "rua_endereco", nullable = false, length = 80)
+	@ApiModelProperty(value = "Logradouro do cliente", required = true)
 	private String ruaEndereco;
-	
-	@NotBlank
+
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 50)
-	@Column(name="bairro_endereco", nullable = false, length = 50)
-	@ApiModelProperty(value="Bairro do cliente", required = true)
+	@Column(name = "bairro_endereco", nullable = false, length = 50)
+	@ApiModelProperty(value = "Bairro do cliente", required = true)
 	private String bairroEndereco;
-	
-	@NotBlank
+
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 80)
-	@Column(name="cidade_endereco", nullable = false, length = 80)
-	@ApiModelProperty(value="Cidade do cliente", required = true)
+	@Column(name = "cidade_endereco", nullable = false, length = 80)
+	@ApiModelProperty(value = "Cidade do cliente", required = true)
 	private String cidadeEndereco;
-	
-	@NotBlank
+
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 20)
-	@Column(name="numero_endereco", nullable = false, length = 20)
-	@ApiModelProperty(value="Número do endereço do cliente", required = true)
+	@Column(name = "numero_endereco", nullable = false, length = 20)
+	@ApiModelProperty(value = "Número do endereço do cliente", required = true)
 	private String numeroEndereco;
-	
-	@NotBlank
+
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 200)
-	@Column(name="complemento_endereco", length = 200)
-	@ApiModelProperty(value="Complemento do endereço do cliente", required = true)
+	@Column(name = "complemento_endereco", length = 200)
+	@ApiModelProperty(value = "Complemento do endereço do cliente", required = true)
 	private String complementoEndereco;
-	
-	@NotBlank
+
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 2)
 	@Column(name = "uf_endereco", length = 2)
-	@ApiModelProperty(value="UF do cliente", required = true)
+	@ApiModelProperty(value = "UF do cliente", required = true)
 	private String UF;
-	
-	
 
 	public String getUF() {
 		return UF;
@@ -148,7 +145,5 @@ public class Endereco {
 		Endereco other = (Endereco) obj;
 		return Objects.equals(idEndereco, other.idEndereco);
 	}
-	
-	
-	
+
 }

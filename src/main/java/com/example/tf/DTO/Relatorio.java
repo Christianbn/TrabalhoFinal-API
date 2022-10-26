@@ -16,7 +16,7 @@ public class Relatorio {
 	@ApiModelProperty(value = "Identificador único do pedido")
 	private Long idPedido;
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Data do pedido")
 	private LocalDate dataPedido;
 	

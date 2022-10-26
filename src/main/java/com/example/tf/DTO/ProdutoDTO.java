@@ -10,25 +10,25 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class ProdutoDTO {
 
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 30)
 	@ApiModelProperty(value = "Nome do produto")
 	private String nomeProduto; 
 	
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 200)
 	@ApiModelProperty(value = "Descrição do produto")
 	private String descricaoProduto ;
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Quantidade de produtos em estoque")
 	private Integer quantidadeEstoqueProduto;
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Valor unitário do produto")
 	private Double valorUnitarioProduto;
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Identificador único da categoria")
 	private Categoria categoria;
 	

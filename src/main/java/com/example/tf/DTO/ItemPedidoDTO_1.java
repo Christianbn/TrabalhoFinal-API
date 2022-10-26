@@ -9,15 +9,15 @@ import io.swagger.annotations.ApiModelProperty;
 public class ItemPedidoDTO_1 {
 
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Quantidade de ItemPedido")
 	private Integer quantidadeItemPedido; 
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Percentual de desconto do ItemPedido")
 	private Double percentualDescontoItemPedido; 
 	
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@ApiModelProperty(value = "Identificador único do produto")
 	private Produto produto;
 	

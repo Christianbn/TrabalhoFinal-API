@@ -32,57 +32,53 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_cliente", nullable = false)
-	@ApiModelProperty(value="Identificador único do cliente")
+	@ApiModelProperty(value = "Identificador único do cliente")
 	private Long idCliente;
 
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 50)
 	@Column(name = "nome_completo_cliente", nullable = false, length = 50)
 	@JsonProperty(access = Access.READ_ONLY)
-	@ApiModelProperty(value="Nome completo do cliente", required = true)
+	@ApiModelProperty(value = "Nome completo do cliente", required = true)
 	private String nomeCompletoCliente;
 
 	@Email
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 80)
 	@JsonProperty(access = Access.READ_ONLY)
 	@Column(name = "email_cliente", nullable = false, length = 80, unique = true)
-	@ApiModelProperty(value="E-mail do cliente", required = true)
+	@ApiModelProperty(value = "E-mail do cliente", required = true)
 	private String emailCliente;
 
 	@CPF
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 11)
 	@JsonProperty(access = Access.READ_ONLY)
 	@Column(name = "cpf_cliente", nullable = false, length = 11, unique = true)
-	@ApiModelProperty(value="CPF do cliente", required = true)
+	@ApiModelProperty(value = "CPF do cliente", required = true)
 	private String cpfCliente;
 
-	@NotBlank
+	@NotBlank(message = "Este campo não pode estar em branco.")
 	@Size(max = 40)
 	@JsonProperty(access = Access.READ_ONLY)
 	@Column(name = "telefone_cliente", nullable = false, length = 40)
-	@ApiModelProperty(value="Telefone do cliente", required = true)
+	@ApiModelProperty(value = "Telefone do cliente", required = true)
 	private String telefoneCliente;
 
 	@Column(name = "data_nascimento_cliente")
 	@JsonProperty(access = Access.READ_ONLY)
-	@ApiModelProperty(value="Data de nascimento do cliente")
+	@ApiModelProperty(value = "Data de nascimento do cliente")
 	private LocalDate dataNascimentoCliente;
 
-	@NotNull
+	@NotNull(message = "Este campo não pode ser nulo.")
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco")
 	@JsonProperty(access = Access.READ_ONLY)
-	@ApiModelProperty(value="Endereço do cliente", required = true)
+	@ApiModelProperty(value = "Endereço do cliente", required = true)
 	private Endereco endereco;
 
-	
-
-	public Cliente(Long idCliente, @NotBlank @Size(max = 50) String nomeCompletoCliente,
-			@Email @NotBlank @Size(max = 80) String emailCliente, @CPF @NotBlank @Size(max = 11) String cpfCliente,
-			@NotBlank @Size(max = 40) String telefoneCliente, LocalDate dataNascimentoCliente,
-			@NotNull Endereco endereco) {
+	public Cliente(Long idCliente, String nomeCompletoCliente, String emailCliente, String cpfCliente,
+			String telefoneCliente, LocalDate dataNascimentoCliente, Endereco endereco) {
 		super();
 		this.idCliente = idCliente;
 		this.nomeCompletoCliente = nomeCompletoCliente;
