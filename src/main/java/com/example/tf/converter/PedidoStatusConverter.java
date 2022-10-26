@@ -5,7 +5,7 @@ import javax.persistence.Converter;
 
 import com.example.tf.enums.PedidoStatus;
 
-@Converter
+@Converter( autoApply = true)
 public class PedidoStatusConverter implements AttributeConverter<PedidoStatus, Integer>{
 
 	 @Override
