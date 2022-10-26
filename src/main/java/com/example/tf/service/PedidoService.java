@@ -68,7 +68,7 @@ public class PedidoService {
 		pedidoRepository.save(pedido);
 		for (ItemPedidoDTO_1 i : pedidoDTO.getItemPedidoDTO_1()) {
 			Optional<Produto> produto = produtoRepository.findById(i.getProduto().getIdProduto());
-			if (i.getQuantidadeItemPedido() <= i.getProduto().getQuantidadeEstoqueProduto()) {
+			if (i.getQuantidadeItemPedido() <= produto.get().getQuantidadeEstoqueProduto()) {
 				ItemPedido iP = new ItemPedido(i, pedido, produto.get());
 				itemPedidoRepository.save(iP);
 				produto.get().setQuantidadeEstoqueProduto(iP.getQuantidadeItemPedido());

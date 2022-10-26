@@ -71,6 +71,12 @@ public class Relatorio {
 	public void setItemRelatorio(List<ItemRelatorio> itemRelatorio) {
 		this.itemRelatorio = itemRelatorio;
 	}
+
+	@Override
+	public String toString() {
+		return "Relatorio \n idPedido=" + idPedido + "\n dataPedido=" + dataPedido + "\n valorTotalPedido="
+				+ valorTotalPedido + "\n itemRelatorio=" + itemRelatorio;
+	}
 	
 	
 	

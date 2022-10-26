@@ -5,9 +5,7 @@ import java.util.List;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 
 import com.example.tf.domain.Cliente;
@@ -27,15 +25,12 @@ public class PedidoDTO_POST {
 	@ApiModelProperty(value = "Data de envio do pedido")
 	private LocalDate dataEnvioPedido;
 	
-	@NotBlank
-	@Size(max = 1)
 	@Enumerated(EnumType.ORDINAL)
 	@ApiModelProperty(value = "Status do pedido")
 	private PedidoStatus status;
 	
 	@NotNull
 	@ApiModelProperty(value = "Identificador único do cliente")
-	
 	private Cliente cliente;
 	
 	@ApiModelProperty(value = "Adiciona os itens que contém no pedido")

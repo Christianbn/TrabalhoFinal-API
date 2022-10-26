@@ -5,17 +5,13 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.example.tf.DTO.PedidoDTO_POST;
 import com.example.tf.enums.PedidoStatus;
@@ -45,9 +41,6 @@ public class Pedido {
 	@ApiModelProperty(value = "Data de envio do pedido")
 	private LocalDate dataEnvioPedido;
 	
-	@NotBlank
-	@Size(max = 1)
-	@Enumerated(EnumType.ORDINAL)
 	@Column(name="status", nullable = false, length = 2)
 	@ApiModelProperty(value = "Status do pedido")
 	private PedidoStatus status; 
@@ -79,7 +72,7 @@ public class Pedido {
 		}
 		this.dataEnvioPedido = pedidoDTO.getDataEnvioPedido();
 		this.status = pedidoDTO.getStatus();
-		this.cliente.setIdCliente(pedidoDTO.getCliente().getIdCliente());
+		this.cliente = pedidoDTO.getCliente();
 		this.valorTotalPedido = 0.0;
 	}
 	
@@ -94,7 +87,7 @@ public class Pedido {
 			this.dataEntregaPedido = pedidoDTO.getDataEntregaPedido();
 		}
 		this.status = pedidoDTO.getStatus();
-		this.cliente.setIdCliente(pedidoDTO.getCliente().getIdCliente());
+		this.cliente = pedidoDTO.getCliente();
 		this.idPedido = id;
 		this.valorTotalPedido = 0.0;
 	}

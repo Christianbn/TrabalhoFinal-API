@@ -16,6 +16,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.example.tf.DTO.ProdutoDTO;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -55,13 +57,14 @@ public class Produto {
 	@ApiModelProperty(value = "Valor unitário do produto")
 	private Double valorUnitarioProduto;
 	
-	//imagemProduto bytea,
 	
 	@NotNull
 	@ManyToOne()
 	@JoinColumn(name = "id_categoria")
+	@JsonProperty(access = Access.READ_ONLY)
 	@ApiModelProperty(value = "Identificador único da categoria")
 	private Categoria categoria;
+	
 	
 	
 	public Produto() {

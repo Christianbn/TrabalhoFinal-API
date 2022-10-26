@@ -27,4 +27,5 @@ public enum PedidoStatus {
         }
         throw new IllegalArgumentException("Esse código é invalido para o status do pedido");
     }
+	
 }

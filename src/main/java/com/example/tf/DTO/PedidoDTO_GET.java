@@ -5,14 +5,11 @@ import java.util.List;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.example.tf.domain.Cliente;
 import com.example.tf.domain.Pedido;
 import com.example.tf.enums.PedidoStatus;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -32,14 +29,11 @@ public class PedidoDTO_GET {
 	@ApiModelProperty(value = "Data de envio do pedido")
 	private LocalDate dataEnvioPedido;
 	
-	@NotBlank
-	@Size(max = 1)
 	@Enumerated(EnumType.ORDINAL)
 	@ApiModelProperty(value = "Status do pedido")
 	private PedidoStatus status; 
 	
 	@NotNull
-	@JsonBackReference
 	@ApiModelProperty(value = "Identificador único do cliente")
 	private Cliente cliente;
 	

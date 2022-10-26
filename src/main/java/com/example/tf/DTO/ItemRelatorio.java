@@ -107,6 +107,16 @@ public class ItemRelatorio {
 
 	public void setValorLiquidoItemPedido(Double valorLiquidoItemPedido) {
 		this.valorLiquidoItemPedido = valorLiquidoItemPedido;
+	}
+
+	@Override
+	public String toString() {
+		return "ItemRelatorio \n idProduto =" + idProduto + "\n nomeProduto =" + nomeProduto + "\n quantidadeItemPedido ="
+				+ quantidadeItemPedido + "\n precoVendaItemPedido =" + precoVendaItemPedido + "\n valorBrutoItemPedido ="
+				+ valorBrutoItemPedido + "\n percentualDescontoItemPedido =" + percentualDescontoItemPedido
+				+ "\n valorLiquidoItemPedido =" + valorLiquidoItemPedido;
 	} 
+	
+	
 	
 }

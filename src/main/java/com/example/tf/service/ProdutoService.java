@@ -1,5 +1,7 @@
 package com.example.tf.service;
 
+import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +9,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.tf.DTO.ProdutoDTO;
 import com.example.tf.domain.Produto;
@@ -17,6 +21,8 @@ public class ProdutoService {
 
 	@Autowired
 	ProdutoRepository produtoRepository;
+	@Autowired
+	FotoService fotoService;
 
 	public List<Produto> findAll() {
 		return produtoRepository.findAll();
@@ -31,13 +37,14 @@ public class ProdutoService {
 	}
 
 	@Transactional
-	public Produto PostProduto(ProdutoDTO produtoDTO) {
+	public Produto PostProduto(ProdutoDTO produtoDTO, MultipartFile file) throws IOException {
 		Optional<Produto> produtoTemp = produtoRepository.findByNomeProduto(produtoDTO.getNomeProduto());
 		if (produtoTemp.isPresent()) {
 			return null;
 		}
 		Produto produto = new Produto(produtoDTO);
 		produtoRepository.save(produto);
+		fotoService.inserir(produto, file);
 		return produto;
 	}
 
@@ -59,5 +66,23 @@ public class ProdutoService {
 		}
 		return false;
 	}
+	
+	public ProdutoDTO adicionarImagemUri(Produto produto) {
+        URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/produto/{id}/foto")
+                .buildAndExpand(produto.getIdProduto()).toUri();
+        ProdutoDTO dto = new ProdutoDTO();
+        dto.setNomeProduto(produto.getNomeProduto());
+        dto.setDescricaoProduto(produto.getDescricaoProduto());
+        dto.setQuantidadeEstoqueProduto(produto.getQuantidadeEstoqueProduto());
+        dto.setValorUnitarioProduto(produto.getValorUnitarioProduto());
+        dto.setUrl(uri.toString());
+        return dto;
+    }
+    
+    public ProdutoDTO buscar(Long id) {
+        Optional<Produto> produto = produtoRepository.findById(id);
+        return adicionarImagemUri(produto.get());
+    }
+
 
 }

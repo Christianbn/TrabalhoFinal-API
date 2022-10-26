@@ -32,6 +32,17 @@ public class ProdutoDTO {
 	@ApiModelProperty(value = "Identificador único da categoria")
 	private Categoria categoria;
 	
+	@ApiModelProperty(value = "URL da imagem do produto", readOnly = true)
+	private String url;
+	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 	public ProdutoDTO() {
 		super();
 	}
@@ -44,6 +55,7 @@ public class ProdutoDTO {
 		this.quantidadeEstoqueProduto = quantidadeEstoqueProduto;
 		this.valorUnitarioProduto = valorUnitarioProduto;
 		this.categoria = categoria;
+		
 	}
 
 	public String getNomeProduto() {

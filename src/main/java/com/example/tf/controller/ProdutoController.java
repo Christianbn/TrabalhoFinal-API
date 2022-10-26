@@ -1,5 +1,6 @@
 package com.example.tf.controller;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +8,9 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +19,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.tf.DTO.ProdutoDTO;
+import com.example.tf.domain.Foto;
 import com.example.tf.domain.Produto;
+import com.example.tf.service.FotoService;
 import com.example.tf.service.ProdutoService;
 
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +40,8 @@ public class ProdutoController {
 
 	@Autowired
 	ProdutoService produtoService;
+	@Autowired
+	FotoService fotoService;
 
 	@GetMapping
 	@ApiOperation(value = "Lista todos os produtos", notes = "Listagem de produtos")
@@ -65,7 +75,7 @@ public class ProdutoController {
 		return ResponseEntity.ok(produto);
 	}
 
-	@PostMapping
+	@PostMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
 	@ApiOperation(value = "Insere os dados de um produto", notes = "Inserir produto")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Produto adicionado"),
 			@ApiResponse(code = 401, message = "Erro de autenticação"),
@@ -73,13 +83,13 @@ public class ProdutoController {
 			@ApiResponse(code = 404, message = "Recurso não encontrado"),
 			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
 	
-	public ResponseEntity<Produto> PostProduto(@Valid @RequestBody ProdutoDTO produtoDTO) {
-		Produto produtoTemp = produtoService.PostProduto(produtoDTO);
+	public ResponseEntity<Produto> PostProduto(@Valid @RequestPart ProdutoDTO produtoDTO, @RequestPart MultipartFile file) throws IOException {
+		Produto produtoTemp = produtoService.PostProduto(produtoDTO, file);
 		if (produtoTemp == null) {
 			return ResponseEntity.notFound().build();
 		}
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(produtoTemp.getIdProduto())
-				.toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/produto/{id}/foto")
+	                .buildAndExpand(produtoTemp.getIdProduto()).toUri();
 		return ResponseEntity.created(uri).body(produtoTemp);
 	}
 
@@ -116,5 +126,20 @@ public class ProdutoController {
 		}
 		return ResponseEntity.notFound().build();
 	}
-
+	
+	@GetMapping("/{id}/foto")
+	@ApiOperation(value = "Procura uma imagem do produto passado via ID", notes = "Procura imagem de produto")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Imagem encontrada"),
+			@ApiResponse(code = 204, message = "Sem conteúdo"),
+			@ApiResponse(code = 401, message = "Erro de autenticação"),
+			@ApiResponse(code = 403, message = "Não há permissão para acessar o recurso"),
+			@ApiResponse(code = 404, message = "Recurso não encontrado"),
+			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
+    public ResponseEntity<byte[]> buscarFoto(@PathVariable Long id) {
+        Foto foto = fotoService.buscarPorIdProduto(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", foto.getTipo());
+        headers.add("Content-length", String.valueOf(foto.getDados().length));
+        return new ResponseEntity<>(foto.getDados(), headers, HttpStatus.OK);
+}
 }

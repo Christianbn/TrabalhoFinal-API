@@ -1,6 +1,7 @@
 package com.example.tf.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.BasicJsonParser;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -13,6 +14,8 @@ public class MailConfig {
 	
 	@Autowired
 	JavaMailSender javaMailSender;
+	
+	BasicJsonParser bjp;
 
 	public void sendEmailProduto(Relatorio relatorio, Cliente cliente) {
 		StringBuffer sb = new StringBuffer();
@@ -44,9 +47,8 @@ public class MailConfig {
 	
 	public void sendEmailRelatorio(Relatorio relatorio, Cliente cliente) {
 		StringBuffer sb = new StringBuffer();
-		sb.append("Olá" + cliente.getNomeCompletoCliente() + ", segue em anexo o relatório do pedido solicitado \n");
+		sb.append("Olá " + cliente.getNomeCompletoCliente() + ", segue em anexo o relatório do pedido solicitado \n");
 		sb.append(relatorio);
-		
 		SimpleMailMessage message = new SimpleMailMessage();
 		
 		message.setFrom("serratec.api@gmail.com");
@@ -55,6 +57,6 @@ public class MailConfig {
 		message.setTo(cliente.getEmailCliente());
 		javaMailSender.send(message);
 	}
-	
+
 	
 }

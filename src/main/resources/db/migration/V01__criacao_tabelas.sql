@@ -11,8 +11,15 @@ CREATE TABLE produto(
 	quantidade_estoque_produto int,
 	data_cadastro_produto date,
 	valor_unitario_produto REAL NOT NULL,
-	imagem_produto bytea,
 	id_categoria int REFERENCES categoria(id_categoria)
+);
+CREATE TABLE foto (
+id_foto serial primary key,
+dados bytea,
+tipo varchar(100),
+nome varchar(100),
+id_produto bigint,
+foreign key (id_produto) references produto(id_produto)
 );
 
 CREATE TABLE endereco(
