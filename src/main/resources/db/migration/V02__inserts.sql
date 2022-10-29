@@ -45,7 +45,7 @@ INSERT INTO cliente (nome_completo_cliente, email_cliente, cpf_cliente, telefone
 
 INSERT INTO pedido (data_pedido, data_entrega_pedido, data_envio_pedido, status, valor_total_pedido, id_cliente)
 VALUES
-('2022-10-10', '2022-10-10', '2022-10-10','c' ,12.99, 1)
+('2022-10-10', '2022-10-10', '2022-10-10',1 ,12.99, 1)
 
 
  ;
