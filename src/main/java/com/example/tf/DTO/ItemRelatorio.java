@@ -111,10 +111,13 @@ public class ItemRelatorio {
 
 	@Override
 	public String toString() {
-		return "ItemRelatorio \n idProduto =" + idProduto + "\n nomeProduto =" + nomeProduto + "\n quantidadeItemPedido ="
-				+ quantidadeItemPedido + "\n precoVendaItemPedido =" + precoVendaItemPedido + "\n valorBrutoItemPedido ="
-				+ valorBrutoItemPedido + "\n percentualDescontoItemPedido =" + percentualDescontoItemPedido
-				+ "\n valorLiquidoItemPedido =" + valorLiquidoItemPedido;
+		return  "Id produto: " + idProduto + "\n"
+				+ "Produto: " + nomeProduto + "\n"
+				+ "Quantidade: "+ quantidadeItemPedido + "\n"
+				+ "Preço de venda: " + precoVendaItemPedido + "R$ \n"
+				+ "Valor bruto: "+ valorBrutoItemPedido + "R$ \n"
+				+ "Desconto: " + percentualDescontoItemPedido + "% \n"
+				+ "Valor liquido: " + valorLiquidoItemPedido+ "R$";
 	} 
 	
 	

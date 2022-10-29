@@ -74,8 +74,11 @@ public class Relatorio {
 
 	@Override
 	public String toString() {
-		return "Relatorio \n idPedido=" + idPedido + "\n dataPedido=" + dataPedido + "\n valorTotalPedido="
-				+ valorTotalPedido + "\n itemRelatorio=" + itemRelatorio;
+		return "================ RELATORIO ================ \n"
+				+ "Pedido Nº" + idPedido + "\n"
+				+ "Data do pedido: " + dataPedido + "\n"
+				+ "Valor total: "+ valorTotalPedido + "\n\n"
+				+ "Detalhes do pedido: \n" + itemRelatorio;
 	}
 	
 	
