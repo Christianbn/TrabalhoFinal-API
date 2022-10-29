@@ -27,6 +27,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.example.tf.DTO.ProdutoDTO;
 import com.example.tf.domain.Foto;
 import com.example.tf.domain.Produto;
+import com.example.tf.exception.DescricaoException;
 import com.example.tf.service.FotoService;
 import com.example.tf.service.ProdutoService;
 
@@ -93,7 +94,7 @@ public class ProdutoController {
 		return ResponseEntity.created(uri).body(produtoTemp);
 	}
 
-	@PutMapping("/{id}")
+	@PutMapping(consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, path = "/{id}")
 	@ApiOperation(value = "Atualiza dados de um produto", notes = "Atualizar produto")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Produto atualizado"),
 			@ApiResponse(code = 401, message = "Erro de autenticação"),
@@ -101,8 +102,8 @@ public class ProdutoController {
 			@ApiResponse(code = 404, message = "Recurso não encontrado"),
 			@ApiResponse(code = 505, message = "Exceção interna da aplicação"), })
 	
-	public ResponseEntity<Optional<Produto>> PutProduto(@Valid @RequestBody ProdutoDTO produtoDTO, @PathVariable Long id) {
-		Optional<Produto> produtoTemp = produtoService.PutProduto(produtoDTO, id);
+	public ResponseEntity<Optional<Produto>> PutProduto(@Valid @RequestPart ProdutoDTO produtoDTO, @RequestPart MultipartFile file, @PathVariable Long id) throws DescricaoException, IOException {
+		Optional<Produto> produtoTemp = produtoService.PutProduto(produtoDTO,file, id);
 		if (!produtoTemp.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}

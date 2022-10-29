@@ -49,11 +49,12 @@ public class ProdutoService {
 		return produto;
 	}
 
-	public Optional<Produto> PutProduto(ProdutoDTO produtoDTO, Long id) throws DescricaoException {
+	public Optional<Produto> PutProduto(ProdutoDTO produtoDTO, MultipartFile file, Long id) throws DescricaoException, IOException {
 		Optional<Produto> produtoTemp = produtoRepository.findById(id);
 		if (produtoTemp.isPresent()) {
 			Produto produto = new Produto(produtoDTO, produtoTemp.get().getIdProduto());
 			produto = produtoRepository.save(produto);
+			fotoService.inserir(produto, file);
 			return Optional.of(produto);
 		}
 		throw new DescricaoException();

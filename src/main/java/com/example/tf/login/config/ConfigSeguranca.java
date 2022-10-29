@@ -42,7 +42,7 @@ public class ConfigSeguranca extends WebSecurityConfigurerAdapter{
 		.csrf().disable()
 		.authorizeHttpRequests()
 		.antMatchers("/").permitAll()
-		.antMatchers(HttpMethod.GET, "/api/categoria","/api/produto").permitAll()
+		.antMatchers(HttpMethod.GET, "/api/categoria","/api/produto","/**/foto").permitAll()
 		.antMatchers(HttpMethod.GET, "/api/cliente").hasAnyAuthority("ADMIN")
 	    .antMatchers(HttpMethod.GET, "/api/pedido").hasAnyAuthority("ADMIN","USER")
 	    .antMatchers(HttpMethod.PUT, "/api/pedido").hasAnyAuthority("ADMIN","USER")
